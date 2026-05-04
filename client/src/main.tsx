@@ -1,10 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './CSS/App.css'
 import App from './App.tsx'
+import { Provider } from "jotai";
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <StrictMode>
+        <Provider>
+            <App />
+        </Provider>
+    </StrictMode>,
 )
