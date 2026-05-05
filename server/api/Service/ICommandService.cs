@@ -1,6 +1,4 @@
-namespace api.Service;
-
-public class ICommandService
+public interface ICommandService
 {
-    
+    Task SendCommandAsync(string turbineId, GameCommandDto command);
 }

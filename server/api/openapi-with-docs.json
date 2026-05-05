@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Command/{turbineId}": {
+    "/api/Command/{deviceId}": {
       "post": {
         "tags": [
           "Command"
@@ -14,7 +14,7 @@
         "operationId": "Command_SendCommand",
         "parameters": [
           {
-            "name": "turbineId",
+            "name": "deviceId",
             "in": "path",
             "required": true,
             "schema": {
@@ -28,7 +28,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TurbineCommandDto"
+                "$ref": "#/components/schemas/GameCommandDto"
               }
             }
           },
@@ -50,140 +50,12 @@
         }
       }
     },
-    "/api/auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "operationId": "Auth_Login",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/register": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "operationId": "Auth_Register",
-        "requestBody": {
-          "x-name": "request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegisterResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/logout": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "operationId": "Auth_Logout",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/userinfo": {
+    "/api/WebApi/whackamole": {
       "get": {
         "tags": [
-          "Auth"
+          "WebApi"
         ],
-        "operationId": "Auth_UserInfo",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthUserInfoDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/GetTurbines": {
-      "get": {
-        "tags": [
-          "WebClient"
-        ],
-        "operationId": "WebClient_GetTurbines",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Turbineregistry"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/GetMeasurementsPerTurbine": {
-      "get": {
-        "tags": [
-          "WebClient"
-        ],
-        "operationId": "WebClient_GetMeasurementsPerTurbine",
+        "operationId": "WebApi_GetWhackamoleScores",
         "parameters": [
           {
             "name": "connectionId",
@@ -192,14 +64,6 @@
               "type": "string"
             },
             "x-position": 1
-          },
-          {
-            "name": "turbineId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -208,7 +72,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfTurbinetelemetry"
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfWhackamolescore"
                 }
               }
             }
@@ -216,12 +80,12 @@
         }
       }
     },
-    "/GetAlertsPerTurbine": {
+    "/api/WebApi/redlightgreenlight": {
       "get": {
         "tags": [
-          "WebClient"
+          "WebApi"
         ],
-        "operationId": "WebClient_GetAlertsPerTurbine",
+        "operationId": "WebApi_GetRedLightScores",
         "parameters": [
           {
             "name": "connectionId",
@@ -230,14 +94,6 @@
               "type": "string"
             },
             "x-position": 1
-          },
-          {
-            "name": "turbineId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 2
           }
         ],
         "responses": {
@@ -246,7 +102,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfAlertCommand"
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfRedlightgreenlightscore"
                 }
               }
             }
@@ -254,12 +110,42 @@
         }
       }
     },
-    "/sse": {
+    "/api/WebApi/simonsays": {
       "get": {
         "tags": [
-          "WebClient"
+          "WebApi"
         ],
-        "operationId": "WebClient_Connect",
+        "operationId": "WebApi_GetSimonSaysScores",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfSimonsaysscore"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/WebApi/sse": {
+      "get": {
+        "tags": [
+          "WebApi"
+        ],
+        "operationId": "WebApi_Connect",
         "responses": {
           "200": {
             "description": ""
@@ -270,143 +156,19 @@
   },
   "components": {
     "schemas": {
-      "TurbineCommandDto": {
+      "GameCommandDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "game": {
+            "type": "string"
+          },
           "action": {
             "type": "string"
-          },
-          "value": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "reason": {
-            "type": "string",
-            "nullable": true
-          },
-          "angle": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
           }
         }
       },
-      "LoginResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "jwt": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/AuthUserInfoDto"
-          }
-        }
-      },
-      "AuthUserInfoDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "LoginRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "RegisterResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "type": "string"
-          }
-        }
-      },
-      "RegisterRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userName",
-          "firstName",
-          "lastName",
-          "password"
-        ],
-        "properties": {
-          "userName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "firstName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "lastName": {
-            "type": "string",
-            "minLength": 1
-          },
-          "password": {
-            "type": "string",
-            "minLength": 6
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "Turbineregistry": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "turbineId": {
-            "type": "string",
-            "nullable": true
-          },
-          "turbineName": {
-            "type": "string"
-          },
-          "farmId": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "RealtimeListenResponseOfListOfTurbinetelemetry": {
+      "RealtimeListenResponseOfListOfWhackamolescore": {
         "allOf": [
           {
             "$ref": "#/components/schemas/RealtimeListenResponse"
@@ -420,14 +182,14 @@
                 "type": "array",
                 "nullable": true,
                 "items": {
-                  "$ref": "#/components/schemas/Turbinetelemetry"
+                  "$ref": "#/components/schemas/Whackamolescore"
                 }
               }
             }
           }
         ]
       },
-      "Turbinetelemetry": {
+      "Whackamolescore": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -435,73 +197,16 @@
             "type": "integer",
             "format": "int32"
           },
-          "turbineId": {
-            "type": "string",
-            "nullable": true
-          },
-          "turbineName": {
+          "playerName": {
             "type": "string"
           },
-          "farmId": {
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
             "type": "string",
-            "nullable": true
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "windSpeed": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "windDirection": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "ambientTemperature": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "rotorSpeed": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "powerOutput": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "nacelleDirection": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "bladePitch": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "generatorTemp": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "gearboxTemp": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "vibration": {
-            "type": "number",
-            "format": "decimal",
-            "nullable": true
-          },
-          "status": {
-            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         }
@@ -516,7 +221,7 @@
           }
         }
       },
-      "RealtimeListenResponseOfListOfAlertCommand": {
+      "RealtimeListenResponseOfListOfRedlightgreenlightscore": {
         "allOf": [
           {
             "$ref": "#/components/schemas/RealtimeListenResponse"
@@ -530,34 +235,74 @@
                 "type": "array",
                 "nullable": true,
                 "items": {
-                  "$ref": "#/components/schemas/AlertCommand"
+                  "$ref": "#/components/schemas/Redlightgreenlightscore"
                 }
               }
             }
           }
         ]
       },
-      "AlertCommand": {
+      "Redlightgreenlightscore": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "alertId": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
-          "turbineId": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
+          "playerName": {
             "type": "string"
           },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
+          "score": {
+            "type": "integer",
+            "format": "int32"
           },
-          "description": {
+          "createdAt": {
             "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "RealtimeListenResponseOfListOfSimonsaysscore": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/RealtimeListenResponse"
+          },
+          {
+            "type": "object",
+            "description": "Returned by subscribe endpoints with initial data. The client receives the current state\nimmediately and knows which SSE group to listen on for subsequent updates.",
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "$ref": "#/components/schemas/Simonsaysscore"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Simonsaysscore": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "playerName": {
+            "type": "string"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         }
