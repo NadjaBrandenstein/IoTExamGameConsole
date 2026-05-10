@@ -1,0 +1,46 @@
+.redbird-page {
+    width: 350px;
+    height: 250px;
+    background: #3732a8;
+    position: relative;
+}
+
+.redbird-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.redbird-content h1 {
+    color: orange;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.redbird-score-box {
+    width: 150px;
+    height: 110px;
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.redbird-score-box p {
+    color: white;
+}
+
+.redbird-start-btn {
+    padding: 10px 20px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: orange;
+}
+
+.redbird-rules {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: orange;
+}

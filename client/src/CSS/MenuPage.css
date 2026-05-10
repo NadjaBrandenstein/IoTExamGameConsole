@@ -1,0 +1,57 @@
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* wrapper for the 3 images */
+.carousel-track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* CENTER IMAGE */
+.carousel-center img {
+    width: 220px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+/* SIDE IMAGES */
+.carousel-side img {
+    width: 160px;
+    height: 110px;
+    object-fit: cover;
+    opacity: 0.6;
+    border-radius: 10px;
+}
+
+/* arrows */
+.menu-arrow {
+    background: transparent;
+    border: none;
+    color: orange;
+    font-size: 40px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.clickable-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.clickable-card:hover {
+    transform: scale(1.08);
+    filter: brightness(1.1);
+}
+
+.clickable-card:active {
+    transform: scale(0.95);
+}
+
