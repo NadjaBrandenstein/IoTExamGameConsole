@@ -1,45 +1,69 @@
 .simon-page {
-    width: 350px;
-    height: 250px;
+    position: fixed;
+    inset: 0;
     background: #3732a8;
-    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
 }
 
 .simon-content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 40px;
+    justify-content: center;
+
+    gap: 20px;
 }
 
 .simon-content h1 {
     color: orange;
-    margin-bottom: 20px;
+    margin: 0;
+
+    font-size: clamp(24px, 4vw, 48px);
+
+    text-align: center;
 }
 
 .simon-score-box {
-    width: 150px;
-    height: 110px;
-    background: rgba(255,255,255,0.15);
-    margin-bottom: 20px;
-    padding: 15px;
-}
+    width: min(300px, 60vw);
+    height: min(200px, 30vh);
 
-.simon-score-box p {
+    background: rgba(255,255,255,0.15);
+
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     color: white;
 }
 
 .simon-start-btn {
-    padding: 10px 20px;
+    padding: 12px 24px;
+
     border: none;
+
     background: rgba(255,255,255,0.2);
+
     color: orange;
+
+    font-size: clamp(14px, 2vw, 18px);
+
+    cursor: pointer;
 }
 
 .simon-rules {
     position: absolute;
-    top: 10px;
+
+    top: 20px;
     right: 20px;
+
     color: orange;
+
+    font-size: clamp(12px, 1.5vw, 16px);
 }
