@@ -14,7 +14,7 @@ const App = () => {
             element: <LandingPage/>
         },
         {
-            path: "/Menu",
+            path: "/menu",
             element: <MenuPage/>
         },
         {

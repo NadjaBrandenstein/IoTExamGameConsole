@@ -55,3 +55,38 @@
     transform: scale(0.95);
 }
 
+.menu-carousel {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-card {
+    width: 160px;
+    height: 90px;
+    background: lightgray;
+}
+
+
+@keyframes floatArrow {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+    100% { transform: translateY(0px); }
+}
+
+.menu-arrow {
+    animation: floatArrow 2s infinite ease-in-out;
+}
+
+/* hover glow */
+.menu-arrow:hover {
+    text-shadow: 0 0 10px orange;
+    transform: scale(1.1);
+}
+
+/* click press effect */
+.menu-arrow:active {
+    transform: scale(0.95);
+}
+
+

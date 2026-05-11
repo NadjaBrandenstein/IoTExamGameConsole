@@ -7,13 +7,13 @@ export const useCommand = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const sendCommand = async (command: GameCommandDto) => {
+    const sendCommand = async (deviceId: string, command: GameCommandDto) => {
 
         try {
             setLoading(true);
             setError(null);
 
-            const response = await commandClient.sendCommand(command);
+            const response = await commandClient.sendCommand(deviceId,command);
 
             return response;
 

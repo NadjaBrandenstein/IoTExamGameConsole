@@ -60,3 +60,20 @@
     bottom: 10px;
     right: 10px;
 }
+
+.clickable {
+    text-shadow: 0 0 10px orange;
+}
+
+.clickable:hover {
+    transform: scale(1.05);
+    color: #ffd27a;
+}
+
+.disabled-title {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.clickable:active {
+    transform: scale(0.95);
+}

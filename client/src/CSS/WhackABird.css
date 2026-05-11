@@ -62,3 +62,25 @@ html, body, #root {
     color: orange;
     font-size: clamp(12px, 1.5vw, 16px);
 }
+
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.score-table th,
+.score-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.score-table th {
+    font-weight: bold;
+}
+
+.wack-score-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
