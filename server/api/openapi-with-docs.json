@@ -50,12 +50,12 @@
         }
       }
     },
-    "/api/WebApi/whackamole": {
+    "/api/WebApi/whackabird": {
       "get": {
         "tags": [
           "WebApi"
         ],
-        "operationId": "WebApi_GetWhackamoleScores",
+        "operationId": "WebApi_GetWhackabirdScores",
         "parameters": [
           {
             "name": "connectionId",
@@ -72,7 +72,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfWhackamolescore"
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfWhackabirdscore"
                 }
               }
             }
@@ -80,12 +80,12 @@
         }
       }
     },
-    "/api/WebApi/redlightgreenlight": {
+    "/api/WebApi/redbirdgreenbird": {
       "get": {
         "tags": [
           "WebApi"
         ],
-        "operationId": "WebApi_GetRedLightScores",
+        "operationId": "WebApi_GetRedbirdScores",
         "parameters": [
           {
             "name": "connectionId",
@@ -102,7 +102,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfRedlightgreenlightscore"
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfRedbirdgreenbirdscore"
                 }
               }
             }
@@ -110,12 +110,12 @@
         }
       }
     },
-    "/api/WebApi/simonsays": {
+    "/api/WebApi/birdiesays": {
       "get": {
         "tags": [
           "WebApi"
         ],
-        "operationId": "WebApi_GetSimonSaysScores",
+        "operationId": "WebApi_GetBirdieSaysScores",
         "parameters": [
           {
             "name": "connectionId",
@@ -132,7 +132,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfSimonsaysscore"
+                  "$ref": "#/components/schemas/RealtimeListenResponseOfListOfBirdiesaysscore"
                 }
               }
             }
@@ -171,7 +171,7 @@
           }
         }
       },
-      "RealtimeListenResponseOfListOfWhackamolescore": {
+      "RealtimeListenResponseOfListOfWhackabirdscore": {
         "allOf": [
           {
             "$ref": "#/components/schemas/RealtimeListenResponse"
@@ -185,14 +185,14 @@
                 "type": "array",
                 "nullable": true,
                 "items": {
-                  "$ref": "#/components/schemas/Whackamolescore"
+                  "$ref": "#/components/schemas/Whackabirdscore"
                 }
               }
             }
           }
         ]
       },
-      "Whackamolescore": {
+      "Whackabirdscore": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -224,7 +224,7 @@
           }
         }
       },
-      "RealtimeListenResponseOfListOfRedlightgreenlightscore": {
+      "RealtimeListenResponseOfListOfRedbirdgreenbirdscore": {
         "allOf": [
           {
             "$ref": "#/components/schemas/RealtimeListenResponse"
@@ -238,14 +238,14 @@
                 "type": "array",
                 "nullable": true,
                 "items": {
-                  "$ref": "#/components/schemas/Redlightgreenlightscore"
+                  "$ref": "#/components/schemas/Redbirdgreenbirdscore"
                 }
               }
             }
           }
         ]
       },
-      "Redlightgreenlightscore": {
+      "Redbirdgreenbirdscore": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -267,7 +267,7 @@
           }
         }
       },
-      "RealtimeListenResponseOfListOfSimonsaysscore": {
+      "RealtimeListenResponseOfListOfBirdiesaysscore": {
         "allOf": [
           {
             "$ref": "#/components/schemas/RealtimeListenResponse"
@@ -281,14 +281,14 @@
                 "type": "array",
                 "nullable": true,
                 "items": {
-                  "$ref": "#/components/schemas/Simonsaysscore"
+                  "$ref": "#/components/schemas/Birdiesaysscore"
                 }
               }
             }
           }
         ]
       },
-      "Simonsaysscore": {
+      "Birdiesaysscore": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
-import type { Whackamolescore } from "../generated-ts-client";
+import type { Whackabirdscore } from "../generated-ts-client";
 
 export default function WackAMolePage() {
 
@@ -17,7 +17,7 @@ export default function WackAMolePage() {
 
     const { sendCommand } = useCommand();
 
-    const [scores, setScores] = useState<Whackamolescore[]>([]);
+    const [scores, setScores] = useState<Whackabirdscore[]>([]);
 
     const startGame = () => {
 
@@ -40,7 +40,7 @@ export default function WackAMolePage() {
             try {
 
                 const response =
-                    await webClient.getWhackamoleScores(undefined);
+                    await webClient.getWhackabirdScores(undefined);
 
                 setScores(response.data || []);
 

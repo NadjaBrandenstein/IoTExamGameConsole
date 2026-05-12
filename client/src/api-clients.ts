@@ -2,8 +2,8 @@ import {
     CommandClient,
     WebApiClient
 } from "./generated-ts-client.ts";
+import {finalBaseUrl} from "./BaseUrl.ts";
 
-import { finalBaseUrl } from "./BaseUrl";
 
 export const customFetch = async (
     url: RequestInfo,

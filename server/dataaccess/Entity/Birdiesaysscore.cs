@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dataaccess.Entity;
 
-public partial class Simonsaysscore
+public partial class Birdiesaysscore
 {
     public int Id { get; set; }
 

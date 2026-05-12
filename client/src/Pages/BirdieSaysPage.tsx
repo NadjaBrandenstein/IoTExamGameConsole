@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
-import type { Simonsaysscore } from "../generated-ts-client";
+import type {Birdiesaysscore} from "../generated-ts-client";
 
 export default function BirdieSaysPage() {
 
@@ -18,7 +18,7 @@ export default function BirdieSaysPage() {
     const { sendCommand } = useCommand();
 
     const [scores, setScores] =
-        useState<Simonsaysscore[]>([]);
+        useState<Birdiesaysscore[]>([]);
 
     const startGame = () => {
 
@@ -41,7 +41,7 @@ export default function BirdieSaysPage() {
             try {
 
                 const response =
-                    await webClient.getSimonSaysScores(undefined);
+                    await webClient.getBirdieSaysScores(undefined);
 
                 setScores(response.data || []);
 

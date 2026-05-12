@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dataaccess.Entity;
 
-public partial class Whackamolescore
+public partial class Whackabirdscore
 {
     public int Id { get; set; }
 

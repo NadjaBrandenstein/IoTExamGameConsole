@@ -9,14 +9,14 @@ SET search_path TO GameConsole;
 -- ============================
 -- DROP TABLES
 -- ============================
-DROP TABLE IF EXISTS SimonSaysScores CASCADE;
-DROP TABLE IF EXISTS WhackAMoleScores CASCADE;
-DROP TABLE IF EXISTS RedLightGreenLightScores CASCADE;
+DROP TABLE IF EXISTS BirdieSaysScores CASCADE;
+DROP TABLE IF EXISTS WhackABirdScores CASCADE;
+DROP TABLE IF EXISTS RedBirdGreenBirdScores CASCADE;
 
 -- ============================
 -- SIMON SAYS TABLE
 -- ============================
-CREATE TABLE SimonSaysScores (
+CREATE TABLE BirdieSaysScores (
                                  id SERIAL PRIMARY KEY,
                                  player_name TEXT NOT NULL,
                                  score INT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE SimonSaysScores (
 -- ============================
 -- WHACK-A-MOLE TABLE
 -- ============================
-CREATE TABLE WhackAMoleScores (
+CREATE TABLE WhackABirdScores (
                                   id SERIAL PRIMARY KEY,
                                   player_name TEXT NOT NULL,
                                   score INT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE WhackAMoleScores (
 -- ============================
 -- RED LIGHT, GREEN LIGHT TABLE
 -- ============================
-CREATE TABLE RedLightGreenLightScores (
+CREATE TABLE RedBirdGreenBirdScores (
                                           id SERIAL PRIMARY KEY,
                                           player_name TEXT NOT NULL,
                                           score INT NOT NULL,
@@ -46,6 +46,6 @@ CREATE TABLE RedLightGreenLightScores (
 -- ============================
 -- INDEXES FOR FAST LEADERBOARDS
 -- ============================
-CREATE INDEX idx_simon_score ON SimonSaysScores(score DESC);
-CREATE INDEX idx_whack_score ON WhackAMoleScores(score DESC);
-CREATE INDEX idx_redlight_score ON RedLightGreenLightScores(score DESC);
+CREATE INDEX idx_simon_score ON BirdieSaysScores(score DESC);
+CREATE INDEX idx_whack_score ON WhackABirdScores(score DESC);
+CREATE INDEX idx_redlight_score ON RedBirdGreenBirdScores(score DESC);

@@ -20,8 +20,8 @@ public class DeviceController(
 
         switch (game)
         {
-            case "whackamole":
-                ctx.Whackamolescores.Add(new Whackamolescore
+            case "whackabird":
+                ctx.Whackabirdscores.Add(new Whackabirdscore
                 {
                     PlayerName = dto.PlayerName,
                     Score = dto.Score,
@@ -29,8 +29,8 @@ public class DeviceController(
                 });
                 break;
 
-            case "redlightgreenlight":
-                ctx.Redlightgreenlightscores.Add(new Redlightgreenlightscore
+            case "redbirdgreenbird":
+                ctx.Redbirdgreenbirdscores.Add(new Redbirdgreenbirdscore
                 {
                     PlayerName = dto.PlayerName,
                     Score = dto.Score,
@@ -38,8 +38,8 @@ public class DeviceController(
                 });
                 break;
 
-            case "simonsays":
-                ctx.Simonsaysscores.Add(new Simonsaysscore
+            case "birdiesays":
+                ctx.Birdiesaysscores.Add(new Birdiesaysscore
                 {
                     PlayerName = dto.PlayerName,
                     Score = dto.Score,

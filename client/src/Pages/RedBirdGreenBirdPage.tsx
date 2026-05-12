@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
-import type { Redlightgreenlightscore } from "../generated-ts-client";
+import type { Redbirdgreenbirdscore } from "../generated-ts-client";
 
 export default function RedBirdGreenBirdPage() {
 
@@ -18,7 +18,7 @@ export default function RedBirdGreenBirdPage() {
     const { sendCommand } = useCommand();
 
     const [scores, setScores] =
-        useState<Redlightgreenlightscore[]>([]);
+        useState<Redbirdgreenbirdscore[]>([]);
 
     const startGame = () => {
 
@@ -39,7 +39,7 @@ export default function RedBirdGreenBirdPage() {
             try {
 
                 const response =
-                    await webClient.getRedLightScores(undefined);
+                    await webClient.getRedbirdScores(undefined);
 
                 setScores(response.data || []);
 

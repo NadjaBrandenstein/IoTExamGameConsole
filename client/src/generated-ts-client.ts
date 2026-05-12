@@ -73,8 +73,8 @@ export class WebApiClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getWhackamoleScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfWhackamolescore> {
-        let url_ = this.baseUrl + "/api/WebApi/whackamole?";
+    getWhackabirdScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfWhackabirdscore> {
+        let url_ = this.baseUrl + "/api/WebApi/whackabird?";
         if (connectionId === null)
             throw new globalThis.Error("The parameter 'connectionId' cannot be null.");
         else if (connectionId !== undefined)
@@ -89,17 +89,17 @@ export class WebApiClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetWhackamoleScores(_response);
+            return this.processGetWhackabirdScores(_response);
         });
     }
 
-    protected processGetWhackamoleScores(response: Response): Promise<RealtimeListenResponseOfListOfWhackamolescore> {
+    protected processGetWhackabirdScores(response: Response): Promise<RealtimeListenResponseOfListOfWhackabirdscore> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfWhackamolescore;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfWhackabirdscore;
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -107,11 +107,11 @@ export class WebApiClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RealtimeListenResponseOfListOfWhackamolescore>(null as any);
+        return Promise.resolve<RealtimeListenResponseOfListOfWhackabirdscore>(null as any);
     }
 
-    getRedLightScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfRedlightgreenlightscore> {
-        let url_ = this.baseUrl + "/api/WebApi/redlightgreenlight?";
+    getRedbirdScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfRedbirdgreenbirdscore> {
+        let url_ = this.baseUrl + "/api/WebApi/redbirdgreenbird?";
         if (connectionId === null)
             throw new globalThis.Error("The parameter 'connectionId' cannot be null.");
         else if (connectionId !== undefined)
@@ -126,17 +126,17 @@ export class WebApiClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetRedLightScores(_response);
+            return this.processGetRedbirdScores(_response);
         });
     }
 
-    protected processGetRedLightScores(response: Response): Promise<RealtimeListenResponseOfListOfRedlightgreenlightscore> {
+    protected processGetRedbirdScores(response: Response): Promise<RealtimeListenResponseOfListOfRedbirdgreenbirdscore> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfRedlightgreenlightscore;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfRedbirdgreenbirdscore;
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -144,11 +144,11 @@ export class WebApiClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RealtimeListenResponseOfListOfRedlightgreenlightscore>(null as any);
+        return Promise.resolve<RealtimeListenResponseOfListOfRedbirdgreenbirdscore>(null as any);
     }
 
-    getSimonSaysScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfSimonsaysscore> {
-        let url_ = this.baseUrl + "/api/WebApi/simonsays?";
+    getBirdieSaysScores(connectionId: string | undefined): Promise<RealtimeListenResponseOfListOfBirdiesaysscore> {
+        let url_ = this.baseUrl + "/api/WebApi/birdiesays?";
         if (connectionId === null)
             throw new globalThis.Error("The parameter 'connectionId' cannot be null.");
         else if (connectionId !== undefined)
@@ -163,17 +163,17 @@ export class WebApiClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetSimonSaysScores(_response);
+            return this.processGetBirdieSaysScores(_response);
         });
     }
 
-    protected processGetSimonSaysScores(response: Response): Promise<RealtimeListenResponseOfListOfSimonsaysscore> {
+    protected processGetBirdieSaysScores(response: Response): Promise<RealtimeListenResponseOfListOfBirdiesaysscore> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfSimonsaysscore;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RealtimeListenResponseOfListOfBirdiesaysscore;
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -181,7 +181,7 @@ export class WebApiClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RealtimeListenResponseOfListOfSimonsaysscore>(null as any);
+        return Promise.resolve<RealtimeListenResponseOfListOfBirdiesaysscore>(null as any);
     }
 
     connect(): Promise<void> {
@@ -227,11 +227,11 @@ export interface RealtimeListenResponse {
 }
 
 /** Returned by subscribe endpoints with initial data. The client receives the current state immediately and knows which SSE group to listen on for subsequent updates. */
-export interface RealtimeListenResponseOfListOfWhackamolescore extends RealtimeListenResponse {
-    data?: Whackamolescore[] | undefined;
+export interface RealtimeListenResponseOfListOfWhackabirdscore extends RealtimeListenResponse {
+    data?: Whackabirdscore[] | undefined;
 }
 
-export interface Whackamolescore {
+export interface Whackabirdscore {
     id?: number;
     playerName?: string;
     score?: number;
@@ -239,11 +239,11 @@ export interface Whackamolescore {
 }
 
 /** Returned by subscribe endpoints with initial data. The client receives the current state immediately and knows which SSE group to listen on for subsequent updates. */
-export interface RealtimeListenResponseOfListOfRedlightgreenlightscore extends RealtimeListenResponse {
-    data?: Redlightgreenlightscore[] | undefined;
+export interface RealtimeListenResponseOfListOfRedbirdgreenbirdscore extends RealtimeListenResponse {
+    data?: Redbirdgreenbirdscore[] | undefined;
 }
 
-export interface Redlightgreenlightscore {
+export interface Redbirdgreenbirdscore {
     id?: number;
     playerName?: string;
     score?: number;
@@ -251,11 +251,11 @@ export interface Redlightgreenlightscore {
 }
 
 /** Returned by subscribe endpoints with initial data. The client receives the current state immediately and knows which SSE group to listen on for subsequent updates. */
-export interface RealtimeListenResponseOfListOfSimonsaysscore extends RealtimeListenResponse {
-    data?: Simonsaysscore[] | undefined;
+export interface RealtimeListenResponseOfListOfBirdiesaysscore extends RealtimeListenResponse {
+    data?: Birdiesaysscore[] | undefined;
 }
 
-export interface Simonsaysscore {
+export interface Birdiesaysscore {
     id?: number;
     playerName?: string;
     score?: number;

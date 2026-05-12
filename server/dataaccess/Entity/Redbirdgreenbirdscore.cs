@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dataaccess.Entity;
 
-public partial class Redlightgreenlightscore
+public partial class Redbirdgreenbirdscore
 {
     public int Id { get; set; }
 

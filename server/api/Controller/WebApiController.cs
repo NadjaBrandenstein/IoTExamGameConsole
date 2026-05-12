@@ -16,18 +16,18 @@ public class WebApiController(
     MyDbContext ctx) : RealtimeControllerBase(backplane)
 {
 
-    [HttpGet("whackamole")]
-    public async Task<RealtimeListenResponse<List<Whackamolescore>>> GetWhackamoleScores([FromQuery] string connectionId)
+    [HttpGet("whackabird")]
+    public async Task<RealtimeListenResponse<List<Whackabirdscore>>> GetWhackabirdScores([FromQuery] string connectionId)
     {
         var group = "WhackamoleScores";
 
         await backplane.Groups.AddToGroupAsync(connectionId, group);
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
-            criteria: snapshot => snapshot.HasChanges<Whackamolescore>(),
+            criteria: snapshot => snapshot.HasChanges<Whackabirdscore>(),
             query: context =>
             {
-                var result = context.Whackamolescores
+                var result = context.Whackabirdscores
                     .GroupBy(x => x.PlayerName)
                     .Select(g => g.OrderByDescending(x => x.Score).First())
                     .OrderByDescending(x => x.Score)
@@ -37,29 +37,29 @@ public class WebApiController(
                 return Task.FromResult<object?>(result);
             });
 
-        var initial = await ctx.Whackamolescores
+        var initial = await ctx.Whackabirdscores
             .GroupBy(x => x.PlayerName)
             .Select(g => g.OrderByDescending(x => x.Score).First())
             .OrderByDescending(x => x.Score)
             .Take(10)
             .ToListAsync();
 
-        return new RealtimeListenResponse<List<Whackamolescore>>(group, initial);
+        return new RealtimeListenResponse<List<Whackabirdscore>>(group, initial);
     }
 
     
-    [HttpGet("redlightgreenlight")]
-    public async Task<RealtimeListenResponse<List<Redlightgreenlightscore>>> GetRedLightScores([FromQuery] string connectionId)
+    [HttpGet("redbirdgreenbird")]
+    public async Task<RealtimeListenResponse<List<Redbirdgreenbirdscore>>> GetRedbirdScores([FromQuery] string connectionId)
     {
-        var group = "RedLightGreenLightScores";
+        var group = "RedBirdGreenBirdScores";
 
         await backplane.Groups.AddToGroupAsync(connectionId, group);
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
-            criteria: snapshot => snapshot.HasChanges<Redlightgreenlightscore>(),
+            criteria: snapshot => snapshot.HasChanges<Redbirdgreenbirdscore>(),
             query: context =>
             {
-                var result = context.Redlightgreenlightscores
+                var result = context.Redbirdgreenbirdscores
                     .GroupBy(x => x.PlayerName)
                     .Select(g => g.OrderByDescending(x => x.Score).First())
                     .OrderByDescending(x => x.Score)
@@ -69,29 +69,29 @@ public class WebApiController(
                 return Task.FromResult<object?>(result);
             });
 
-        var initial = await ctx.Redlightgreenlightscores
+        var initial = await ctx.Redbirdgreenbirdscores
             .GroupBy(x => x.PlayerName)
             .Select(g => g.OrderByDescending(x => x.Score).First())
             .OrderByDescending(x => x.Score)
             .Take(10)
             .ToListAsync();
 
-        return new RealtimeListenResponse<List<Redlightgreenlightscore>>(group, initial);
+        return new RealtimeListenResponse<List<Redbirdgreenbirdscore>>(group, initial);
     }
 
     
-    [HttpGet("simonsays")]
-    public async Task<RealtimeListenResponse<List<Simonsaysscore>>> GetSimonSaysScores([FromQuery] string connectionId)
+    [HttpGet("birdiesays")]
+    public async Task<RealtimeListenResponse<List<Birdiesaysscore>>> GetBirdieSaysScores([FromQuery] string connectionId)
     {
-        var group = "SimonSaysScores";
+        var group = "BirdieSaysScores";
 
         await backplane.Groups.AddToGroupAsync(connectionId, group);
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
-            criteria: snapshot => snapshot.HasChanges<Simonsaysscore>(),
+            criteria: snapshot => snapshot.HasChanges<Birdiesaysscore>(),
             query: context =>
             {
-                var result = context.Simonsaysscores
+                var result = context.Birdiesaysscores
                     .GroupBy(x => x.PlayerName)
                     .Select(g => g.OrderByDescending(x => x.Score).First())
                     .OrderByDescending(x => x.Score)
@@ -101,13 +101,13 @@ public class WebApiController(
                 return Task.FromResult<object?>(result);
             });
 
-        var initial = await ctx.Simonsaysscores
+        var initial = await ctx.Birdiesaysscores
             .GroupBy(x => x.PlayerName)
             .Select(g => g.OrderByDescending(x => x.Score).First())
             .OrderByDescending(x => x.Score)
             .Take(10)
             .ToListAsync();
 
-        return new RealtimeListenResponse<List<Simonsaysscore>>(group, initial);
+        return new RealtimeListenResponse<List<Birdiesaysscore>>(group, initial);
     }
 }
