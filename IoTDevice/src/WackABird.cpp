@@ -1,10 +1,11 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include "MqttClient.h"
 
 const int knapper[7] = {2, 13, 14, 26, 25, 4, 12};
 
-int score = 0;
+static int score = 0;
 
 // GAME TIMER
 const unsigned long GAME_TIME = 30000;
@@ -15,7 +16,7 @@ unsigned long gameStart = 0;
 #define LCD_COLUMNS 16
 #define LCD_ROWS 2
 
-LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
+static LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 // ---------------- LCD ----------------
 
@@ -69,7 +70,7 @@ bool checkHit(int pin, unsigned long timeoutMs) {
 
 // ---------------- SETUP ----------------
 
-void setup() {
+void wackInit() {
 
     Serial.begin(115200);
     randomSeed(analogRead(34));
@@ -87,11 +88,12 @@ void setup() {
     lcd.print("Ready!");
 
     delay(1500);
+    score = 0;
 }
 
 // ---------------- LOOP ----------------
 
-void loop() {
+void wackUpdate() {
 
     gameStart = millis();
     score = 0;
@@ -124,6 +126,11 @@ void loop() {
     lcd.setCursor(0,1);
     lcd.print("Score:");
     lcd.print(score);
+
+    Serial.print("Final Score: ");
+    Serial.println(score);
+
+    publishScore(score);
 
     delay(5000);
 }

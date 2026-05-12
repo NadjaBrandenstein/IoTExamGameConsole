@@ -27,11 +27,12 @@ public class CommandService (
         var normalizedCommand = new GameCommandDto
         {
             Game = command.Game.ToLower(),
-            Action = command.Action.ToLower()
+            Action = command.Action.ToLower(),
+            PlayerName = command.PlayerName
         };
 
         // Topic (update this if your device expects something else)
-        var topic = $"ito/device/{deviceId}/command";
+        var topic = $"iot/game/{deviceId}/command";
 
         // Serialize payload
         var payload = JsonSerializer.Serialize(normalizedCommand, new JsonSerializerOptions
@@ -58,9 +59,9 @@ public class CommandService (
 
         var validGames = new[] 
         { 
-            "simonsays", 
-            "whackamole", 
-            "redlightgreenlight" 
+            "birdiesays", 
+            "whackabird", 
+            "redbirdgreenbird" 
         };
 
         if (!validGames.Contains(command.Game.ToLower()))

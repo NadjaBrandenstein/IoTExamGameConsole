@@ -11,7 +11,7 @@ public class DeviceController(
     MyDbContext ctx) : MqttController
 {
     
-    [MqttRoute("farm/EB_Windmill/windmill/{deviceId}/score")]
+    [MqttRoute("iot/game/{deviceId}/score")]
     public async Task HandleScore(string deviceId, GameScoreDto dto)
     {
         logger.LogInformation($"Game: {dto.Game}, Player: {dto.PlayerName}, Score: {dto.Score}");

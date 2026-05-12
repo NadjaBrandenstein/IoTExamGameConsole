@@ -1,6 +1,7 @@
-/* #include <Arduino.h>
+#include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include "MqttClient.h"
 
 const int N = 7;
 
@@ -9,14 +10,14 @@ const int pins[N] = {2, 13, 14, 26, 25, 4, 12};
 
 int sequence[50];
 int seqLen = 2;
-int score = 0;
+static int score = 0;
 
 // LCD
 #define LCD_ADDRESS 0x27
 #define LCD_COLUMNS 16
 #define LCD_ROWS 2
 
-LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
+static LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 // ---------------- LCD HELPERS ----------------
 
@@ -160,7 +161,7 @@ void addStep(){
 
 // ---------------- SETUP ----------------
 
-void setup(){
+void simonInit(){
 
   Serial.begin(115200);
   randomSeed(millis());
@@ -176,6 +177,9 @@ void setup(){
   drawLCD("Simon Says", "Ready!");
   delay(1500);
 
+  score = 0;
+  seqLen = 2;
+
   for(int i=0;i<N;i++){
     pinMode(pins[i], INPUT_PULLUP);
   }
@@ -189,7 +193,7 @@ void setup(){
 
 // ---------------- LOOP ----------------
 
-void loop(){
+void simonUpdate(){
 
   showSequence();
 
@@ -211,6 +215,8 @@ void loop(){
     Serial.print("Final Score: ");
     Serial.println(score);
 
+    publishScore(score);
+
     gameOverScreen();
     delay(3000);
 
@@ -221,4 +227,4 @@ void loop(){
       sequence[i] = random(0, N);
     }
   }
-} */
+}

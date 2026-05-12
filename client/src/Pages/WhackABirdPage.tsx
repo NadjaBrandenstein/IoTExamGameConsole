@@ -25,9 +25,11 @@ export default function WackAMolePage() {
             return alert("Please enter a name!");
         }
 
-        sendCommand(name, {
-            action: "startGame",
-            game: "whackabird"
+        sendCommand("firebeetle01", {
+            game: "whackabird",
+            action: "start",
+            playerName: name
+
         });
     };
 

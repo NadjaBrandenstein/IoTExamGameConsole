@@ -165,6 +165,9 @@
           },
           "action": {
             "type": "string"
+          },
+          "playerName": {
+            "type": "string"
           }
         }
       },

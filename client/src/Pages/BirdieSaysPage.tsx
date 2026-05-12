@@ -26,9 +26,11 @@ export default function BirdieSaysPage() {
             return alert("Please enter a name!");
         }
 
-        sendCommand(name, {
-            action: "startGame",
-            game: "birdiesays"
+        sendCommand("firebeetle01", {
+            game: "birdiesays",
+            action: "start",
+            playerName: name
+
         });
     };
 

@@ -17,7 +17,7 @@ public class WebApiController(
 {
 
     [HttpGet("whackamole")]
-    public async Task<RealtimeListenResponse<List<Whackamolescore>>> GetWhackamoleScores(string connectionId)
+    public async Task<RealtimeListenResponse<List<Whackamolescore>>> GetWhackamoleScores([FromQuery] string connectionId)
     {
         var group = "WhackamoleScores";
 
@@ -49,7 +49,7 @@ public class WebApiController(
 
     
     [HttpGet("redlightgreenlight")]
-    public async Task<RealtimeListenResponse<List<Redlightgreenlightscore>>> GetRedLightScores(string connectionId)
+    public async Task<RealtimeListenResponse<List<Redlightgreenlightscore>>> GetRedLightScores([FromQuery] string connectionId)
     {
         var group = "RedLightGreenLightScores";
 
@@ -81,7 +81,7 @@ public class WebApiController(
 
     
     [HttpGet("simonsays")]
-    public async Task<RealtimeListenResponse<List<Simonsaysscore>>> GetSimonSaysScores(string connectionId)
+    public async Task<RealtimeListenResponse<List<Simonsaysscore>>> GetSimonSaysScores([FromQuery] string connectionId)
     {
         var group = "SimonSaysScores";
 

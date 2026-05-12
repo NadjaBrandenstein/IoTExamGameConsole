@@ -218,6 +218,7 @@ export class WebApiClient {
 export interface GameCommandDto {
     game?: string;
     action?: string;
+    playerName?: string;
 }
 
 /** Returned by subscribe endpoints so the client knows which SSE group to listen on. */

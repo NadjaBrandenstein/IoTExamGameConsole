@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using api;
+using api.Service;
 // using api.Security;
 // using api.Service;
 // using dataaccess.Entity;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using dataaccess.MyDbContext;
 // using dataaccess.Repositories;
 using Mqtt.Controllers;
+using MQTTnet;
 using StateleSSE.AspNetCore;
 using StateleSSE.AspNetCore.GroupRealtime;
 
@@ -21,12 +23,13 @@ public class Program
 
         // Use concrete AppDbContext instead of abstract DbContext
         //var connectionString = appOptions.DbConnectionString;
-       // builder.Services.AddDbContext<MyDbContext>((sp, options) =>
-        // {
-        //     options.AddEfRealtimeInterceptor(sp);
-        //     //options.UseNpgsql(connectionString)
-        //         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        // });
+        
+        // Database
+        builder.Services.AddDbContext<MyDbContext>(options =>
+        {
+            options.UseNpgsql(
+                builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
         // Repositories
         //builder.Services.AddScoped<IRepository<Login>, LoginRepository>();
@@ -34,9 +37,13 @@ public class Program
 
         // Services
         //builder.Services.AddScoped<IPasswordHasher<Login>, NSecArgon2IdPasswordHasher>();
-        //builder.Services.AddScoped<ICommandService, CommandService>();
+        builder.Services.AddScoped<ICommandService, CommandService>();
         //builder.Services.AddScoped<IAuthService, AuthService>();
         //builder.Services.AddScoped<ITokenService, JwtService>();
+        
+        // MQTT service
+        // builder.Services.AddScoped<IMqttClientService, MqttClientService>();
+        builder.Services.AddMqttControllers();
         
         // Authentication & Authorization
         builder.Services.AddAuthentication(options =>
@@ -68,6 +75,7 @@ public class Program
 
         builder.Services.AddAuthorization();
 
+        // SSE 
         builder.Services.AddInMemorySseBackplane();
         builder.Services.AddEfRealtime();
         builder.Services.AddGroupRealtime();
@@ -86,7 +94,7 @@ public class Program
         builder.Services.AddOpenApiDocument(); // no DefaultPropertyNameHandling needed
 
         builder.Services.AddProblemDetails();
-        builder.Services.AddMqttControllers();
+        
         // CORS
         builder.Services.AddCors(options =>
         {
@@ -117,7 +125,6 @@ public class Program
         // Middleware pipeline
         app.UseRouting();
         app.UseCors("FrontendPolicy");
-        
 
         app.UseAuthentication();
         app.UseAuthorization();
@@ -132,9 +139,24 @@ public class Program
         
         app.MapControllers();
         app.UseExceptionHandler();
+        
+        // MQTT connect
+        var mqtt = app.Services.GetRequiredService<IMqttClientService>();
+        var mqttConfig = builder.Configuration.GetSection("Mqtt");
 
-        var mqttController = app.Services.GetRequiredService<IMqttClientService>();
-        await mqttController.ConnectAsync("broker.hivemq.com", 1883);
+        var host = mqttConfig["Host"] ?? "mqtt.flespi.io";
+        var port = int.Parse(mqttConfig["Port"] ?? "1883");
+        var token = mqttConfig["Token"];
+        
+        await mqtt.ConnectAsync(
+            host: host,
+            port: port,
+            username: token,
+            password: null,
+            useTls: false
+        );
+
+        Console.WriteLine($"Connected to MQTT broker {host}:{port}");
 
         await app.RunAsync();
     }
