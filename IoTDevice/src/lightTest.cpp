@@ -1,4 +1,4 @@
-#include <Arduino.h>
+/* #include <Arduino.h>
 
 // Pin-mapping for knap 1-9
 const int knapper[7] = {
@@ -32,4 +32,4 @@ void loop() {
     digitalWrite(knapper[i], LOW);  // sluk igen
   }
 
-}
+} */

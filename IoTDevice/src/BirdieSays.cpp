@@ -3,6 +3,8 @@
 #include <LiquidCrystal_I2C.h>
 #include "MqttClient.h"
 
+extern String playerName;
+
 const int N = 7;
 
 // Shared GPIO pins (LED + button on same pin)
@@ -11,6 +13,7 @@ const int pins[N] = {2, 13, 14, 26, 25, 4, 12};
 int sequence[50];
 int seqLen = 2;
 static int score = 0;
+bool gameRunning = false;
 
 // LCD
 #define LCD_ADDRESS 0x27
@@ -32,6 +35,17 @@ void drawLCD(const char* line1, const char* line2){
   lcd.print(line2);
 }
 
+void updateLCD(int timeLeft){
+
+  char l1[16];
+  char l2[16];
+
+  sprintf(l1, "Score:%d", score);
+  sprintf(l2, "Time:%d", timeLeft);
+
+  drawLCD(l1, l2);
+}
+
 void gameOverScreen(){
 
   char l1[16];
@@ -43,16 +57,40 @@ void gameOverScreen(){
   drawLCD(l1, l2);
 }
 
-void updateLCD(int timeLeft){
+// ---------------- GAME CONTROL ----------------
 
-  char l1[16];
-  char l2[16];
+void birdieStartGame() {
 
-  sprintf(l1, "Score:%d", score);
-  sprintf(l2, "Time:%d", timeLeft);
+    score = 0;
+    seqLen = 2;
 
-  drawLCD(l1, l2);
+    for(int i = 0; i < seqLen; i++){
+        sequence[i] = random(0, N);
+    }
+
+    gameRunning = true;
+
+    Serial.println("Game started!");
 }
+
+/* void onCommand(String game, String action, String playerName) {
+
+    if (game != "birdiesays") return;
+
+    if (action == "start") {
+
+        currentPlayer = playerName;
+
+        birdieStartGame();
+    }
+
+    if (action == "stop") {
+
+        gameRunning = false;
+
+        drawLCD("Game stopped", "");
+    }
+} */
 
 // ---------------- LED ----------------
 
@@ -78,7 +116,7 @@ void showSequence(){
   drawLCD("WATCH!", "Memorize");
   delay(800);
 
-  for(int i=0;i<seqLen;i++){
+  for(int i = 0; i < seqLen ; i++){
 
     int idx = sequence[i];
 
@@ -90,7 +128,7 @@ void showSequence(){
     showLED(pins[idx]);
   }
 
-  for(int i=0;i<N;i++){
+  for(int i = 0 ; i < N; i++){
     pinMode(pins[i], INPUT_PULLUP);
   }
 
@@ -103,7 +141,7 @@ bool playerTurn(){
 
   Serial.println("--- PLAYER TURN ---");
 
-  for(int i=0;i<seqLen;i++){
+  for(int i = 0; i < seqLen; i++){
 
     bool correct = false;
     unsigned long start = millis();
@@ -118,7 +156,7 @@ bool playerTurn(){
         lastTime = timeLeft;
       }
 
-      for(int b=0;b<N;b++){
+      for(int b = 0; b < N; b++){
 
         pinMode(pins[b], INPUT_PULLUP);
 
@@ -161,7 +199,7 @@ void addStep(){
 
 // ---------------- SETUP ----------------
 
-void simonInit(){
+void birdieInit(){
 
   Serial.begin(115200);
   randomSeed(millis());
@@ -174,30 +212,36 @@ void simonInit(){
   lcd.backlight();
   lcd.clear();
 
-  drawLCD("Simon Says", "Ready!");
+  drawLCD("Birdie Says", "Ready!");
   delay(1500);
 
-  score = 0;
-  seqLen = 2;
+  /* score = 0;
+  seqLen = 2; */
 
-  for(int i=0;i<N;i++){
+  for(int i = 0; i < N; i++){
     pinMode(pins[i], INPUT_PULLUP);
   }
 
-  for(int i=0;i<seqLen;i++){
+  /* for(int i=0;i<seqLen;i++){
     sequence[i] = random(0, N);
-  }
+  } */
 
-  Serial.println("Simon Says Ready!");
+  Serial.println("Birdie Says Ready!");
 }
 
 // ---------------- LOOP ----------------
 
-void simonUpdate(){
+void birdieUpdate(){
+
+  if (!gameRunning) return;
 
   showSequence();
 
+  if (!gameRunning) return;
+
   bool ok = playerTurn();
+
+  if (!gameRunning) return;
 
   if(ok){
 
@@ -207,7 +251,7 @@ void simonUpdate(){
     Serial.print("Score: ");
     Serial.println(score);
 
-    delay(1000);
+    delay(500);
 
   } else {
 
@@ -215,16 +259,20 @@ void simonUpdate(){
     Serial.print("Final Score: ");
     Serial.println(score);
 
-    publishScore(score);
+    publishScore(playerName, score);
 
     gameOverScreen();
     delay(3000);
 
-    seqLen = 2;
+    /* seqLen = 2;
     score = 0;
 
     for(int i=0;i<seqLen;i++){
       sequence[i] = random(0, N);
-    }
+    } */
+
+    gameRunning = false;   // STOP GAME HERE
+
+    return;
   }
 }

@@ -4,19 +4,19 @@
 #include "config.h"
 
 // External game functions
-void simonInit();
-void simonUpdate();
+void birdieInit();
+void birdieUpdate();
 
-void wackInit();
-void wackUpdate();
+void whackInit();
+void whackUpdate();
 
 // External MQTT variables (defined in MqttClient.cpp)
-extern String playerName;
+/* extern String playerName;
 extern String gameName;
 extern String pubTopic;
 extern String subTopic;
 
-extern const char* MQTT_BASE_TOPIC; 
+extern const char* MQTT_BASE_TOPIC;  */
 
 GameState currentGame = GAME_NONE;
 
@@ -29,13 +29,13 @@ void setGame(GameState newGame) {
         case GAME_BIRDIE_SAYS:
             Serial.println("Starting Birdie Says...");
             gameName = "birdiesays";
-            simonInit();
+            birdieInit();
             break;
 
         case GAME_WACK_A_BIRD:
             Serial.println("Starting Whack-A-Bird...");
             gameName = "wack";
-            wackInit();
+            whackInit();
             break;
 
         default:
@@ -61,11 +61,11 @@ void updateGame() {
 
     switch(currentGame) {
         case GAME_BIRDIE_SAYS:
-            simonUpdate();
+            birdieUpdate();
             break;
 
         case GAME_WACK_A_BIRD:
-            wackUpdate();
+            whackUpdate();
             break;
 
         default:

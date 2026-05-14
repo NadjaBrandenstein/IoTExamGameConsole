@@ -22,6 +22,8 @@ export default function BirdieSaysPage() {
 
     const startGame = () => {
 
+        console.log("Sending player:", name);
+
         if (!name) {
             return alert("Please enter a name!");
         }
@@ -36,24 +38,82 @@ export default function BirdieSaysPage() {
 
     useEffect(() => {
 
-        const loadScores = async () => {
+        const connectionId = crypto.randomUUID();
+
+        // Subscribe backend
+        const subscribe = async () => {
 
             try {
 
                 const response =
-                    await webClient.getBirdieSaysScores(undefined);
+                    await webClient.getBirdieSaysScores(connectionId);
 
                 setScores(response.data || []);
 
             } catch (err) {
 
-                console.error("Failed to load scores", err);
+                console.error(
+                    "Failed to subscribe",
+                    err
+                );
             }
         };
 
-        loadScores();
+        subscribe();
+
+        // Open SSE stream
+        const eventSource = new EventSource(
+            `http://localhost:5000/api/WebApi/sse?connectionId=${connectionId}`
+        );
+
+        eventSource.onmessage = (event) => {
+
+            const payload =
+                JSON.parse(event.data);
+
+            console.log("SSE:", payload);
+
+            if (
+                payload.groupName ===
+                "BirdieSaysScores"
+            ) {
+
+                setScores(payload.data);
+            }
+        };
+
+        eventSource.onerror = (err) => {
+
+            console.error("SSE error", err);
+        };
+
+        return () => {
+
+            eventSource.close();
+        };
 
     }, []);
+
+    // useEffect(() => {
+    //
+    //     const loadScores = async () => {
+    //
+    //         try {
+    //
+    //             const response =
+    //                 await webClient.getBirdieSaysScores(undefined);
+    //
+    //             setScores(response.data || []);
+    //
+    //         } catch (err) {
+    //
+    //             console.error("Failed to load scores", err);
+    //         }
+    //     };
+    //
+    //     loadScores();
+    //
+    // }, []);
 
     return (
         <div className="simon-page">

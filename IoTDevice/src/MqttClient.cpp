@@ -9,18 +9,16 @@
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
 
-//const int LDR_PIN = 34;
-//unsigned long lastPublish = 0;
-
 // Shared variables
 String playerName = "";
 String gameName = "";
 String deviceId = "firebeetle01";
+void birdieStartGame();
 
 // Topics 
 String pubTopic;
 String subTopic;
-
+ 
 // ---------------- WIFI ----------------
 
 void connectWiFi() {
@@ -42,14 +40,17 @@ void connectWiFi() {
 // ---------------- MQTT CALLBACK ----------------
 
 // This function is called when a message arrives on a subscribed topic
-void onMessageReceived(char* topic, byte* payload, unsigned int length) {
-
+void onMessageReceived(char* topic, byte* payload, unsigned int length)
+{
     Serial.println("MESSAGE RECEIVED!");
+
     StaticJsonDocument<256> doc;
 
-    DeserializationError error = deserializeJson(doc, payload, length);
+    DeserializationError error =
+        deserializeJson(doc, payload, length);
 
-    if (error) {
+    if (error)
+    {
         Serial.print("JSON parse failed: ");
         Serial.println(error.c_str());
         return;
@@ -59,35 +60,57 @@ void onMessageReceived(char* topic, byte* payload, unsigned int length) {
     const char* action = doc["action"];
     const char* player = doc["playerName"];
 
-    if (player) {
+    Serial.println("---- MQTT COMMAND ----");
+
+    if (game)
+        Serial.println(game);
+
+    if (action)
+        Serial.println(action);
+
+    // Save player name globally
+    if (player)
+    {
         playerName = String(player);
     }
 
-    Serial.println("---- MQTT COMMAND ----");
-    Serial.println(game);
-    Serial.println(action);
+    if (!game || !action)
+        return;
 
-    if (game && action) {
+    // ---------------- BIRDIE SAYS ----------------
 
-        if (strcmp(game, "birdiesays") == 0 &&
-            strcmp(action, "start") == 0)
-        {
-            gameName = "birdiesays";
-            setGame(GAME_BIRDIE_SAYS);
-        }
+    if (
+        strcmp(game, "birdiesays") == 0 &&
+        strcmp(action, "start") == 0
+    )
+    {
+        gameName = "birdiesays";
 
-        if (strcmp(game, "whackabird") == 0 &&
-            strcmp(action, "start") == 0)
-        {
-            gameName = "whackabird";
-            setGame(GAME_WACK_A_BIRD);
-        }
+        Serial.println("Starting Birdie Says");
+
+        setGame(GAME_BIRDIE_SAYS);
+
+        birdieStartGame();
+    }
+
+    // ---------------- WHACK A BIRD ----------------
+
+    if (
+        strcmp(game, "whackabird") == 0 &&
+        strcmp(action, "start") == 0
+    )
+    {
+        gameName = "whackabird";
+
+        Serial.println("Starting Whack A Bird");
+
+        setGame(GAME_WACK_A_BIRD);
     }
 }
 
 // ---------------- PUBLISH ----------------
 
-void publishScore(int score) {
+void publishScore(String playerName, int score) {
 
     char payload[150];
 
@@ -97,6 +120,9 @@ void publishScore(int score) {
         gameName.c_str(),
         score
     );
+
+    Serial.println("Publishing score:");
+    Serial.println(payload);
 
     mqttClient.publish(pubTopic.c_str(), payload);
 }
@@ -151,7 +177,7 @@ void mqttSetup() {
 
     connectWiFi();
 
-     // Default topics
+    // Default topics
     pubTopic = "iot/game/firebeetle01/score";
     subTopic = "iot/game/firebeetle01/command";
 

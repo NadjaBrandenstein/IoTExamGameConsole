@@ -13,7 +13,8 @@ extern String deviceId;
 // Functions
 void mqttSetup();
 void mqttLoop();
-void publishScore(int score);
 bool connectMqtt();
+
+void publishScore(String playerName, int score);
 
 #endif

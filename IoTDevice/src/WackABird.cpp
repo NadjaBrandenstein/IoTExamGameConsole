@@ -70,7 +70,7 @@ bool checkHit(int pin, unsigned long timeoutMs) {
 
 // ---------------- SETUP ----------------
 
-void wackInit() {
+void whackInit() {
 
     Serial.begin(115200);
     randomSeed(analogRead(34));
@@ -83,7 +83,7 @@ void wackInit() {
 
     lcd.clear();
     lcd.setCursor(0,0);
-    lcd.print("Whac-A-Mole");
+    lcd.print("Whac-A-Bird");
     lcd.setCursor(0,1);
     lcd.print("Ready!");
 
@@ -93,7 +93,7 @@ void wackInit() {
 
 // ---------------- LOOP ----------------
 
-void wackUpdate() {
+void whackUpdate() {
 
     gameStart = millis();
     score = 0;
@@ -130,7 +130,7 @@ void wackUpdate() {
     Serial.print("Final Score: ");
     Serial.println(score);
 
-    publishScore(score);
+    //publishScore(score);
 
     delay(5000);
 }

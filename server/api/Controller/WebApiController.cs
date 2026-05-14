@@ -91,23 +91,39 @@ public class WebApiController(
             criteria: snapshot => snapshot.HasChanges<Birdiesaysscore>(),
             query: context =>
             {
+                // var allScores = await context.Birdiesaysscores.ToListAsync();
+                //
+                // var result = allScores
+                //     //.GroupBy(x => x.PlayerName)
+                //     //.Select(g => g.OrderByDescending(x => x.Score).First())
+                //     .OrderByDescending(x => x.Score)
+                //     .Take(10)
+                //     .ToList();
+
                 var result = context.Birdiesaysscores
-                    .GroupBy(x => x.PlayerName)
-                    .Select(g => g.OrderByDescending(x => x.Score).First())
+                    .AsNoTracking()
                     .OrderByDescending(x => x.Score)
                     .Take(10)
-                    .ToList();
-
+                    .ToListAsync();
+                
                 return Task.FromResult<object?>(result);
             });
 
+        // var allInitialScores = await ctx.Birdiesaysscores.ToListAsync();
+        //
+        // var initial = allInitialScores
+        //     //.GroupBy(x => x.PlayerName)
+        //     //.Select(g => g.OrderByDescending(x => x.Score).First())
+        //     .OrderByDescending(x => x.Score)
+        //     .Take(10)
+        //     .ToList();
+
         var initial = await ctx.Birdiesaysscores
-            .GroupBy(x => x.PlayerName)
-            .Select(g => g.OrderByDescending(x => x.Score).First())
+            .AsNoTracking()
             .OrderByDescending(x => x.Score)
             .Take(10)
             .ToListAsync();
-
+        
         return new RealtimeListenResponse<List<Birdiesaysscore>>(group, initial);
     }
 }

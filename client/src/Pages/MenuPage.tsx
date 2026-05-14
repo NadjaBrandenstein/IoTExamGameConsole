@@ -74,7 +74,11 @@ export default function MenuPage() {
 
                         <div
                             className="carousel-center clickable-card"
-                            onClick={() => navigate(current.route)}
+                            onClick={() =>
+                                navigate(current.route, {
+                                    state: { name }
+                                })
+                            }
                         >
                             <img src={current.img} />
                         </div>

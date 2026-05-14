@@ -19,16 +19,22 @@ public class Program
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration, WebApplicationBuilder builder)
     {
-        //var appOptions = services.AddAppOptions(configuration);
+        var appOptions = services.AddAppOptions(configuration);
 
         // Use concrete AppDbContext instead of abstract DbContext
-        //var connectionString = appOptions.DbConnectionString;
+        var connectionString = appOptions.DbConnectionString;
         
         // Database
-        builder.Services.AddDbContext<MyDbContext>(options =>
+        // builder.Services.AddDbContext<MyDbContext>(options =>
+        // {
+        //     options.UseNpgsql(
+        //         builder.Configuration.GetConnectionString("DefaultConnection"));
+        // });
+        builder.Services.AddDbContext<MyDbContext>((sp, options) =>
         {
-            options.UseNpgsql(
-                builder.Configuration.GetConnectionString("DefaultConnection"));
+            options.AddEfRealtimeInterceptor(sp);
+            options.UseNpgsql(connectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
         });
 
         // Repositories
