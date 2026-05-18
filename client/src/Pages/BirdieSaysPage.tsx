@@ -1,24 +1,31 @@
 import "../CSS/BirdieSays.css";
 import "../CSS/App.css";
 
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { useLocation } from "react-router-dom";
 
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
-import type {Birdiesaysscore} from "../generated-ts-client";
+import type { Birdiesaysscore } from "../generated-ts-client";
+import {StateleSSEClient} from "statele-sse";
+
+const sse = new StateleSSEClient(
+    "http://localhost:5000/api/WebApi/sse"
+);
 
 export default function BirdieSaysPage() {
 
     const location = useLocation();
-
     const name = location.state?.name || "Player";
 
     const { sendCommand } = useCommand();
 
-    const [scores, setScores] =
-        useState<Birdiesaysscore[]>([]);
+    const [scores, setScores] = useState<Birdiesaysscore[]>([]);
+
+    const cleanupRef = useRef<(() => void) | null>(null);
+
+    // ---------------- START GAME ----------------
 
     const startGame = () => {
 
@@ -32,88 +39,44 @@ export default function BirdieSaysPage() {
             game: "birdiesays",
             action: "start",
             playerName: name
-
         });
     };
 
+    // ---------------- REALTIME SCOREBOARD ----------------
+
     useEffect(() => {
 
-        const connectionId = crypto.randomUUID();
+        // cleanup previous listener
+        if (cleanupRef.current) {
+            cleanupRef.current();
+        }
 
-        // Subscribe backend
-        const subscribe = async () => {
+        const cleanup = sse.listen(
 
-            try {
+            // subscribe callback
+            async (connectionId) => {
 
-                const response =
-                    await webClient.getBirdieSaysScores(connectionId);
+                console.log("SSE connection ID:", connectionId);
 
-                setScores(response.data || []);
+                return await webClient.getBirdieSaysScores(connectionId);
+            },
 
-            } catch (err) {
+            // data callback
+            (data) => {
 
-                console.error(
-                    "Failed to subscribe",
-                    err
-                );
+                console.log("Realtime update:", data);
+
+                setScores(data);
             }
-        };
-
-        subscribe();
-
-        // Open SSE stream
-        const eventSource = new EventSource(
-            `http://localhost:5000/api/WebApi/sse?connectionId=${connectionId}`
         );
 
-        eventSource.onmessage = (event) => {
+        cleanupRef.current = cleanup;
 
-            const payload =
-                JSON.parse(event.data);
-
-            console.log("SSE:", payload);
-
-            if (
-                payload.groupName ===
-                "BirdieSaysScores"
-            ) {
-
-                setScores(payload.data);
-            }
-        };
-
-        eventSource.onerror = (err) => {
-
-            console.error("SSE error", err);
-        };
-
-        return () => {
-
-            eventSource.close();
-        };
+        return () => cleanup?.();
 
     }, []);
 
-    // useEffect(() => {
-    //
-    //     const loadScores = async () => {
-    //
-    //         try {
-    //
-    //             const response =
-    //                 await webClient.getBirdieSaysScores(undefined);
-    //
-    //             setScores(response.data || []);
-    //
-    //         } catch (err) {
-    //
-    //             console.error("Failed to load scores", err);
-    //         }
-    //     };
-    //
-    //     loadScores();
-    //
-    // }, []);
+    // ---------------- UI ----------------
 
     return (
         <div className="simon-page">
@@ -142,10 +105,12 @@ export default function BirdieSaysPage() {
                         {scores.map((player) => (
 
                             <tr key={player.id}>
-                                <td>{player.playerName}</td>
-                                <td>{player.score}</td>
-                            </tr>
 
+                                <td>{player.playerName}</td>
+
+                                <td>{player.score}</td>
+
+                            </tr>
                         ))}
 
                         </tbody>

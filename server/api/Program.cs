@@ -34,7 +34,7 @@ public class Program
         {
             options.AddEfRealtimeInterceptor(sp);
             options.UseNpgsql(connectionString)
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
 
         // Repositories
@@ -142,7 +142,7 @@ public class Program
         {
             await app.GenerateApiClientsFromOpenApi("/../../client/src/generated-ts-client.ts");
         }
-        
+
         app.MapControllers();
         app.UseExceptionHandler();
         
@@ -162,7 +162,10 @@ public class Program
             useTls: false
         );
 
+        await mqtt.SubscribeAsync("iot/game/+/score");
+
         Console.WriteLine($"Connected to MQTT broker {host}:{port}");
+        Console.WriteLine("Subscribed to score topics");
 
         await app.RunAsync();
     }

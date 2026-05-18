@@ -3,6 +3,8 @@ using dataaccess.Entity;
 using dataaccess.MyDbContext;
 using Microsoft.EntityFrameworkCore;
 using Mqtt.Controllers;
+using StateleSSE.AspNetCore;
+using StateleSSE.AspNetCore.EfRealtime;
 
 namespace api.Controller;
 
@@ -53,5 +55,7 @@ public class DeviceController(
         }
 
         await ctx.SaveChangesAsync();
+        
+        Console.WriteLine("Score saved to database");
     }
 }

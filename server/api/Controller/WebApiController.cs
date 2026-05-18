@@ -89,41 +89,22 @@ public class WebApiController(
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
             criteria: snapshot => snapshot.HasChanges<Birdiesaysscore>(),
-            query: context =>
+            query: async context =>
             {
-                // var allScores = await context.Birdiesaysscores.ToListAsync();
-                //
-                // var result = allScores
-                //     //.GroupBy(x => x.PlayerName)
-                //     //.Select(g => g.OrderByDescending(x => x.Score).First())
-                //     .OrderByDescending(x => x.Score)
-                //     .Take(10)
-                //     .ToList();
-
-                var result = context.Birdiesaysscores
-                    .AsNoTracking()
+                return context.Birdiesaysscores
                     .OrderByDescending(x => x.Score)
                     .Take(10)
-                    .ToListAsync();
+                    .ToList();
                 
-                return Task.FromResult<object?>(result);
+                //return Task.FromResult<object?>(result);
+                //return (object?)result;
             });
 
-        // var allInitialScores = await ctx.Birdiesaysscores.ToListAsync();
-        //
-        // var initial = allInitialScores
-        //     //.GroupBy(x => x.PlayerName)
-        //     //.Select(g => g.OrderByDescending(x => x.Score).First())
-        //     .OrderByDescending(x => x.Score)
-        //     .Take(10)
-        //     .ToList();
-
-        var initial = await ctx.Birdiesaysscores
-            .AsNoTracking()
+        var initial = ctx.Birdiesaysscores
             .OrderByDescending(x => x.Score)
             .Take(10)
-            .ToListAsync();
-        
+            .ToList();
+
         return new RealtimeListenResponse<List<Birdiesaysscore>>(group, initial);
     }
 }
