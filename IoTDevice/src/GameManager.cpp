@@ -34,7 +34,7 @@ void setGame(GameState newGame) {
 
         case GAME_WACK_A_BIRD:
             Serial.println("Starting Whack-A-Bird...");
-            gameName = "wack";
+            gameName = "whackabird";
             whackInit();
             break;
 

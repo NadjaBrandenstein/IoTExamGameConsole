@@ -1,10 +1,10 @@
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include "config.h"
 #include "MqttClient.h"
 #include "GameManager.h"
-#include <ArduinoJson.h>
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -14,6 +14,7 @@ String playerName = "";
 String gameName = "";
 String deviceId = "firebeetle01";
 void birdieStartGame();
+void whackStartGame();
 
 // Topics 
 String pubTopic;
@@ -105,6 +106,8 @@ void onMessageReceived(char* topic, byte* payload, unsigned int length)
         Serial.println("Starting Whack A Bird");
 
         setGame(GAME_WACK_A_BIRD);
+
+        whackStartGame();
     }
 }
 

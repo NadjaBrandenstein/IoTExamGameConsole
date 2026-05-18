@@ -25,24 +25,18 @@ public class WebApiController(
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
             criteria: snapshot => snapshot.HasChanges<Whackabirdscore>(),
-            query: context =>
+            query: async context =>
             {
-                var result = context.Whackabirdscores
-                    .GroupBy(x => x.PlayerName)
-                    .Select(g => g.OrderByDescending(x => x.Score).First())
+                return context.Whackabirdscores
                     .OrderByDescending(x => x.Score)
                     .Take(10)
                     .ToList();
-
-                return Task.FromResult<object?>(result);
             });
 
-        var initial = await ctx.Whackabirdscores
-            .GroupBy(x => x.PlayerName)
-            .Select(g => g.OrderByDescending(x => x.Score).First())
+        var initial = ctx.Whackabirdscores
             .OrderByDescending(x => x.Score)
             .Take(10)
-            .ToListAsync();
+            .ToList();
 
         return new RealtimeListenResponse<List<Whackabirdscore>>(group, initial);
     }
@@ -57,24 +51,18 @@ public class WebApiController(
 
         realtimeManager.Subscribe<MyDbContext>(connectionId, group,
             criteria: snapshot => snapshot.HasChanges<Redbirdgreenbirdscore>(),
-            query: context =>
+            query: async context =>
             {
-                var result = context.Redbirdgreenbirdscores
-                    .GroupBy(x => x.PlayerName)
-                    .Select(g => g.OrderByDescending(x => x.Score).First())
+                return context.Redbirdgreenbirdscores
                     .OrderByDescending(x => x.Score)
                     .Take(10)
                     .ToList();
-
-                return Task.FromResult<object?>(result);
             });
 
-        var initial = await ctx.Redbirdgreenbirdscores
-            .GroupBy(x => x.PlayerName)
-            .Select(g => g.OrderByDescending(x => x.Score).First())
+        var initial = ctx.Redbirdgreenbirdscores
             .OrderByDescending(x => x.Score)
             .Take(10)
-            .ToListAsync();
+            .ToList();
 
         return new RealtimeListenResponse<List<Redbirdgreenbirdscore>>(group, initial);
     }
@@ -95,9 +83,6 @@ public class WebApiController(
                     .OrderByDescending(x => x.Score)
                     .Take(10)
                     .ToList();
-                
-                //return Task.FromResult<object?>(result);
-                //return (object?)result;
             });
 
         var initial = ctx.Birdiesaysscores
