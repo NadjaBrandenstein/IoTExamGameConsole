@@ -3,7 +3,7 @@
 #include <LiquidCrystal_I2C.h>
 #include "MqttClient.h"
 
-const int knapper[7] = {2, 13, 14, 26, 25, 4, 12};
+const int pins[7] = {2, 13, 14, 26, 25, 4, 12};
 
 static int score = 0;
 
@@ -20,43 +20,55 @@ static LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 // ---------------- LCD ----------------
 
-void drawLCD(int timeLeft){
+void drawLCD(int timeLeft)
+{
+    char l1[16];
+    char l2[16];
 
-  char l1[16];
-  char l2[16];
+    sprintf(l1, "Score:%d", score);
+    sprintf(l2, "Time:%d", timeLeft);
 
-  sprintf(l1, "Score:%d", score);
-  sprintf(l2, "Time:%d", timeLeft);
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(l1);
 
-  lcd.clear();
-
-  lcd.setCursor(0,0);
-  lcd.print(l1);
-
-  lcd.setCursor(0,1);
-  lcd.print(l2);
+    lcd.setCursor(0, 1);
+    lcd.print(l2);
 }
 
-// ---------------- GAME ----------------
+// ---------------- LED CONTROL ----------------
 
-bool checkHit(int pin, unsigned long timeoutMs) {
+void setAllOff()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        pinMode(pins[i], OUTPUT);
+        digitalWrite(pins[i], LOW);
+    }
+}
 
-    unsigned long start = millis();
+void showTarget(int pin)
+{
+    setAllOff();
 
     pinMode(pin, OUTPUT);
     digitalWrite(pin, HIGH);
+}
 
-    while (millis() - start < timeoutMs) {
+// ---------------- BUTTON CHECK ----------------
 
-        pinMode(pin, INPUT_PULLUP);
-        delayMicroseconds(100);
+bool checkButton(int pin, unsigned long timeoutMs)
+{
+    unsigned long start = millis();
 
-        if (digitalRead(pin) == LOW) {
-            delay(25);
+    while (millis() - start < timeoutMs)
+    {
+        if (digitalRead(pin) == LOW)
+        {
+            delay(25); // debounce
 
-            if (digitalRead(pin) == LOW) {
-
-                digitalWrite(pin, LOW);
+            if (digitalRead(pin) == LOW)
+            {
                 return true;
             }
         }
@@ -64,14 +76,13 @@ bool checkHit(int pin, unsigned long timeoutMs) {
         delay(5);
     }
 
-    digitalWrite(pin, LOW);
     return false;
 }
 
 // ---------------- SETUP ----------------
 
-void whackInit() {
-
+void whackInit()
+{
     Serial.begin(115200);
     randomSeed(analogRead(34));
 
@@ -82,55 +93,76 @@ void whackInit() {
     lcd.backlight();
 
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("Whac-A-Bird");
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print("Ready!");
 
     delay(1500);
+
     score = 0;
+
+    // IMPORTANT: set buttons as inputs ONCE
+    for (int i = 0; i < 7; i++)
+    {
+        pinMode(pins[i], INPUT_PULLUP);
+    }
+
+    setAllOff();
 }
 
 // ---------------- LOOP ----------------
 
-void whackUpdate() {
-
+void whackUpdate()
+{
     gameStart = millis();
     score = 0;
 
-    while (millis() - gameStart < GAME_TIME) {
-
-        int aktiv = random(0, 7);
+    while (millis() - gameStart < GAME_TIME)
+    {
+        int idx = random(0, 7);
+        int pin = pins[idx];
 
         int timeLeft = (GAME_TIME - (millis() - gameStart)) / 1000;
 
-        bool ramt = checkHit(knapper[aktiv], 2000);
+        // show target
+        showTarget(pin);
 
-        pinMode(knapper[aktiv], OUTPUT);
-        digitalWrite(knapper[aktiv], LOW);
+        bool hit = checkButton(pin, 1200);
 
-        if (ramt) score++;
-        else score--;
+        // turn off LED
+        digitalWrite(pin, LOW);
+
+        if (hit)
+        {
+            score++;
+        }
+        else
+        {
+            score--;
+        }
 
         drawLCD(timeLeft);
 
-        delay(200);
+        delay(150);
     }
 
     // ---------------- GAME OVER ----------------
 
+    setAllOff();
+
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("GAME OVER");
 
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print("Score:");
     lcd.print(score);
 
     Serial.print("Final Score: ");
     Serial.println(score);
 
-    //publishScore(score);
+    publishScore(playerName, score);
 
     delay(5000);
 }
