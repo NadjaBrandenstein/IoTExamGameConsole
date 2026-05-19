@@ -1,4 +1,5 @@
 import "../CSS/App.css";
+import "../CSS/LandingPage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bird1 from "../assets/bird1.png";
@@ -10,11 +11,16 @@ import Bird from "../Components/Bird.tsx";
 export default function LandingPage() {
 
     const [name, setName] = useState("");
+
     const navigate = useNavigate();
 
     const startGame = () => {
+
         if (!name.trim()) return;
-        navigate("/menu", { state: { name } });
+
+        navigate("/menu", {
+            state: { name }
+        });
     };
 
     const canStart = name.trim().length > 0;
@@ -30,28 +36,41 @@ export default function LandingPage() {
 
             <div className="page-content">
 
-                {/* H1 becomes interactive */}
+                {/* START TITLE */}
                 {canStart ? (
+
                     <h1
-                        className="title clickable"
+                        className="landing-title clickable"
                         onClick={startGame}
                     >
                         START GAME
                     </h1>
+
                 ) : (
-                    <h1 className="title disabled-title">
+
+                    <h1 className="landing-title disabled-title">
                         START GAME
                     </h1>
+
                 )}
 
+                {/* INPUT */}
                 <input
                     className="input"
                     placeholder="Insert Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+
+                    onKeyDown={(e) => {
+
+                        if (e.key === "Enter" && canStart) {
+                            startGame();
+                        }
+                    }}
                 />
 
             </div>
+
         </div>
     );
 }
