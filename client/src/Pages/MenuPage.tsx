@@ -15,17 +15,17 @@ import bird4 from "../assets/bird4.png";
 
 const games = [
     {
-        img: "/src/assets/game1.png",
+        img: "/src/assets/birdie_says.png",
         rules: <BirdieSaysRules />,
         route: "/birdie-says"
     },
     {
-        img: "/src/assets/game2.png",
+        img: "/src/assets/whack a bird.png",
         rules: <WhackABirdRules />,
         route: "/whack-a-bird"
     },
     {
-        img: "/src/assets/game3.png",
+        img: "/src/assets/Redbird_GreenBird.png",
         rules: <RedBirdGreenBirdRules />,
         route: "/red-bird-green-bird"
     }

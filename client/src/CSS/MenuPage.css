@@ -9,13 +9,13 @@
 .carousel-track {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 50px;
 }
 
 /* CENTER IMAGE */
 .carousel-center img {
-    width: 220px;
-    height: 140px;
+    width: 400px;
+    height: 400px;
     object-fit: cover;
     border-radius: 10px;
     transform: scale(1.05);
@@ -24,8 +24,8 @@
 
 /* SIDE IMAGES */
 .carousel-side img {
-    width: 160px;
-    height: 110px;
+    width: 300px;
+    height: 300px;
     object-fit: cover;
     opacity: 0.6;
     border-radius: 10px;
@@ -36,9 +36,9 @@
     background: transparent;
     border: none;
     color: orange;
-    font-size: 40px;
+    font-size: 150px;
     cursor: pointer;
-    padding: 10px;
+    padding: 20px;
 }
 
 .clickable-card {

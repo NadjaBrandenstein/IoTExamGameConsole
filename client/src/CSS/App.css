@@ -51,8 +51,9 @@ html, body, #root {
 ========================= */
 .bird {
     position: absolute;
-    font-size: 28px;
-    color: orange;
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
     pointer-events: none;
 }
 
