@@ -1,9 +1,9 @@
 export default function WhackABirdRules(){
     return (
-        <div>
+        <div className="rules-content">
             <h3>Whack A Bird</h3>
             <p>
-                you have 30 secounds to hit as meny targets as possible
+                You have 30 secounds to hit as meny targets as possible
                 when a target is hit a new one will spawn which make it
                 possible to get many point during the 30 secound off game play.
                 when a target is missed you will lose a point or

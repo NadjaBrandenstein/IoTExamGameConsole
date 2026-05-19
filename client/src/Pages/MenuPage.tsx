@@ -57,7 +57,7 @@ export default function MenuPage() {
 
             <div className="page-content">
 
-                <h1 className="title">WELCOME {name}</h1>
+                <h1 className="title-menu">WELCOME {name}</h1>
 
                 {/* CAROUSEL */}
                 <div className="carousel">
@@ -94,11 +94,12 @@ export default function MenuPage() {
 
                 </div>
 
-                {/* RULES */}
-                <div className="rules-box">
-                    {current.rules}
-                </div>
 
+
+            </div>
+            {/* RULES */}
+            <div className="rules-box">
+                {current.rules}
             </div>
         </div>
     );

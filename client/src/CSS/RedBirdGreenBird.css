@@ -1,6 +1,7 @@
 .redbird-page {
     position: fixed;
     inset: 0;
+
     background: #3732a8;
 
     display: flex;
@@ -10,57 +11,185 @@
     overflow: hidden;
 }
 
+/* =========================
+   MAIN CENTER CONTENT
+========================= */
+
 .redbird-content {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
+
+    gap: 30px;
 }
 
-.redbird-content h1 {
+/* =========================
+   HEADER
+========================= */
+
+.redbird-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.redbird-header h1 {
     color: orange;
-    margin-bottom: 20px;
+
+    margin: 0;
+
+    font-size: clamp(24px, 4vw, 48px);
+
     text-align: center;
 }
 
-.redbird-score-box {
-    width: 150px;
-    height: 110px;
-    background: rgba(255,255,255,0.15);
-    margin-bottom: 20px;
-    padding: 15px;
+/* =========================
+   RULES TOOLTIP
+========================= */
+
+.rules-tooltip {
+    position: relative;
 }
 
-.redbird-score-box p {
-    color: white;
-}
+.rules-icon {
+    width: 28px;
+    height: 28px;
 
-.redbird-start-btn {
-    padding: 10px 20px;
-    border: none;
+    border-radius: 50%;
+
     background: rgba(255,255,255,0.2);
+
     color: orange;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
 }
 
-.redbird-rules {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: orange;
+.rules-icon:hover {
+    background: rgba(255,255,255,0.35);
 }
+
+.tooltip-box {
+    position: absolute;
+
+    top: 40px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 320px;
+
+    background: rgba(0,0,0,0.9);
+
+    color: white;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.2s ease;
+
+    z-index: 100;
+}
+
+.rules-tooltip:hover .tooltip-box {
+    opacity: 1;
+}
+
+/* =========================
+   SCORE BOX
+========================= */
 
 .redbird-score-box {
-    width: min(300px, 60vw);
-    height: min(200px, 30vh);
+    width: min(400px, 70vw);
+
+    min-height: 220px;
 
     background: rgba(255,255,255,0.15);
 
-    padding: 15px;
+    padding: 20px;
+
+    border-radius: 12px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     color: white;
+}
+
+/* =========================
+   SCORE TABLE
+========================= */
+
+.score-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    text-align: center;
+
+    color: white;
+}
+
+.score-table th {
+    color: orange;
+
+    padding-bottom: 12px;
+
+    font-size: 20px;
+}
+
+.score-table td {
+    padding: 8px 16px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.redbird-start-btn {
+    padding: 12px 24px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: rgba(255,255,255,0.2);
+
+    color: orange;
+
+    font-size: clamp(14px, 2vw, 18px);
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.redbird-start-btn:hover {
+    background: rgba(255,255,255,0.3);
+
+    transform: scale(1.05);
+}
+
+.redbird-start-btn:active {
+    transform: scale(0.95);
 }

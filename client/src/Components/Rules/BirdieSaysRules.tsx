@@ -1,9 +1,9 @@
 export default function BirdieSaysRules() {
     return (
-        <div>
+        <div className="rules-content">
             <h3>Birdie Says</h3>
             <p>
-                a light sequence will show and you will have to hit
+                A light sequence will show and you will have to hit
                 the targets in the right sequence.
                 each right hit will give you a point.
                 one miss and you will lose the game.

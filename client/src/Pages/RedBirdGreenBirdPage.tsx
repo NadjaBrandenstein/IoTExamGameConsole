@@ -1,5 +1,13 @@
 import "../CSS/RedBirdGreenBird.css";
 import "../CSS/App.css";
+import RedBirdGreenBirdRules from "../Components/Rules/RedBirdGreenBirdRules.tsx";
+
+import bird1 from "../assets/bird1.png";
+import bird2 from "../assets/bird2.png";
+import bird3 from "../assets/bird3.png";
+import bird4 from "../assets/bird4.png";
+
+import Bird from "../Components/Bird.tsx";
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -56,14 +64,32 @@ export default function RedBirdGreenBirdPage() {
     return (
         <div className="redbird-page">
 
-            <div className="redbird-rules">
-                Rules
-            </div>
+            {/* birds */}
+            <Bird position="top-left" src={bird1} />
+            <Bird position="top-right" src={bird2} />
+            <Bird position="bottom-left" src={bird3} />
+            <Bird position="bottom-right" src={bird4} />
 
             <div className="redbird-content">
 
-                <h1>RED BIRD GREEN BIRD</h1>
+                {/* HEADER */}
+                <div className="redbird-header">
 
+                    <h1>RED BIRD GREEN BIRD</h1>
+
+                    <div className="rules-tooltip">
+
+                        <span className="rules-icon">?</span>
+
+                        <div className="tooltip-box">
+                            <RedBirdGreenBirdRules />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {/* SCOREBOARD */}
                 <div className="redbird-score-box">
 
                     <table className="score-table">
@@ -80,8 +106,11 @@ export default function RedBirdGreenBirdPage() {
                         {scores.map((player) => (
 
                             <tr key={player.id}>
+
                                 <td>{player.playerName}</td>
+
                                 <td>{player.score}</td>
+
                             </tr>
 
                         ))}
@@ -92,6 +121,7 @@ export default function RedBirdGreenBirdPage() {
 
                 </div>
 
+                {/* BUTTON */}
                 <button
                     className="redbird-start-btn"
                     onClick={startGame}
@@ -100,6 +130,7 @@ export default function RedBirdGreenBirdPage() {
                 </button>
 
             </div>
+
         </div>
     );
 }

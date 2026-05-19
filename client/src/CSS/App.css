@@ -51,10 +51,13 @@ html, body, #root {
 ========================= */
 .bird {
     position: absolute;
-    width: 75px;
-    height: 75px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
-    pointer-events: none;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
 }
 
 /* corners */
@@ -93,7 +96,7 @@ html, body, #root {
 .title {
     color: orange;
     margin: 0;
-    font-size: clamp(24px, 4vw, 48px);
+    font-size: clamp(48px, 24vw, 96px);
 }
 
 /* =========================
@@ -117,7 +120,7 @@ html, body, #root {
    INPUT
 ========================= */
 .input {
-    width: 180px;
+    width: 400px;
     padding: 10px;
     border: none;
     text-align: center;

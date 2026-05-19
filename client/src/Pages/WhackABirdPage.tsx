@@ -1,5 +1,11 @@
 import "../CSS/WhackABird.css";
 import "../CSS/App.css";
+import bird1 from "../assets/bird1.png";
+import bird2 from "../assets/bird2.png";
+import bird3 from "../assets/bird3.png";
+import bird4 from "../assets/bird4.png";
+import Bird from "../Components/Bird.tsx";
+import WhackABirdRules from "../Components/Rules/WhackABirdRules.tsx";
 
 import {useEffect, useRef, useState} from "react";
 import { useLocation } from "react-router-dom";
@@ -78,14 +84,32 @@ export default function WackAMolePage() {
     return (
         <div className="wack-page">
 
-            <div className="wack-rules">
-                Rules
-            </div>
+            {/* birds */}
+            <Bird position="top-left" src={bird1} />
+            <Bird position="top-right" src={bird2} />
+            <Bird position="bottom-left" src={bird3} />
+            <Bird position="bottom-right" src={bird4} />
 
             <div className="wack-content">
 
-                <h1>WACK-A-BIRD</h1>
+                {/* HEADER */}
+                <div className="wack-header">
 
+                    <h1>WHACK-A-BIRD</h1>
+
+                    <div className="rules-tooltip">
+
+                        <span className="rules-icon">?</span>
+
+                        <div className="tooltip-box">
+                            <WhackABirdRules />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {/* SCOREBOARD */}
                 <div className="wack-score-box">
 
                     <table className="score-table">
@@ -98,18 +122,26 @@ export default function WackAMolePage() {
                         </thead>
 
                         <tbody>
+
                         {scores.map((player) => (
+
                             <tr key={player.id}>
+
                                 <td>{player.playerName}</td>
+
                                 <td>{player.score}</td>
+
                             </tr>
+
                         ))}
+
                         </tbody>
 
                     </table>
 
                 </div>
 
+                {/* BUTTON */}
                 <button
                     className="wack-start-btn"
                     onClick={startGame}
@@ -118,6 +150,7 @@ export default function WackAMolePage() {
                 </button>
 
             </div>
+
         </div>
     );
 }

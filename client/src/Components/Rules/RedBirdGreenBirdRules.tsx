@@ -1,9 +1,9 @@
 export default function RedBirdGreenBirdRules(){
     return (
-        <div>
+        <div className="rules-content">
             <h3>RedBirdGreenBird</h3>
             <p>
-                start 3 meter from the device and move as fast
+                Start 3 meter from the device and move as fast
                 as possible to the device and hit the middle button.
                 person with the farstet time will be on top off the leader board.
                 move forward when it is green bird

@@ -1,5 +1,6 @@
 import "../CSS/BirdieSays.css";
 import "../CSS/App.css";
+import BirdieSaysRules from "../Components/Rules/BirdieSaysRules.tsx";
 
 import {useEffect, useRef, useState} from "react";
 import { useLocation } from "react-router-dom";
@@ -9,6 +10,12 @@ import { webClient } from "../api-clients.ts";
 
 import type { Birdiesaysscore } from "../generated-ts-client";
 import {StateleSSEClient} from "statele-sse";
+
+import bird1 from "../assets/bird1.png";
+import bird2 from "../assets/bird2.png";
+import bird3 from "../assets/bird3.png";
+import bird4 from "../assets/bird4.png";
+import Bird from "../Components/Bird.tsx";
 
 const sse = new StateleSSEClient(
     "http://localhost:5000/api/WebApi/sse"
@@ -79,17 +86,35 @@ export default function BirdieSaysPage() {
     // ---------------- UI ----------------
 
     return (
-        <div className="simon-page">
+        <div className="birdie-page">
 
-            <div className="simon-rules">
-                Rules
-            </div>
+            {/* birds */}
+            <Bird position="top-left" src={bird1} />
+            <Bird position="top-right" src={bird2} />
+            <Bird position="bottom-left" src={bird3} />
+            <Bird position="bottom-right" src={bird4} />
 
-            <div className="simon-content">
+            <div className="birdie-content">
 
-                <h1>BIRDIE SAYS</h1>
+                {/* HEADER */}
+                <div className="birdie-header">
 
-                <div className="simon-score-box">
+                    <h1>BIRDIE SAYS</h1>
+
+                    <div className="rules-tooltip">
+
+                        <span className="rules-icon">?</span>
+
+                        <div className="tooltip-box">
+                            <BirdieSaysRules />
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {/* SCOREBOARD */}
+                <div className="birdie-score-box">
 
                     <table className="score-table">
 
@@ -111,6 +136,7 @@ export default function BirdieSaysPage() {
                                 <td>{player.score}</td>
 
                             </tr>
+
                         ))}
 
                         </tbody>
@@ -119,8 +145,9 @@ export default function BirdieSaysPage() {
 
                 </div>
 
+                {/* BUTTON */}
                 <button
-                    className="simon-start-btn"
+                    className="birdie-start-btn"
                     onClick={startGame}
                 >
                     START GAME
