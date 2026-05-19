@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "MqttClient.h"
-#include "GameManager.h"
+#include "System/MqttClient.h"
+#include "Core/GameManager.h"
 
 void setup() {
     Serial.begin(115200);

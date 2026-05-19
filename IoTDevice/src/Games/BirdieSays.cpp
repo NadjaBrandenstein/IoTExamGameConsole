@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "MqttClient.h"
+#include "System/MqttClient.h"
 
 extern String playerName;
 
@@ -26,7 +26,7 @@ static LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 void drawLCD(const char* line1, const char* line2){
 
-  lcd.clear();   // IMPORTANT FIX (removes garbage + symbols)
+  lcd.clear();
 
   lcd.setCursor(0,0);
   lcd.print(line1);
@@ -72,25 +72,6 @@ void birdieStartGame() {
 
     Serial.println("Game started!");
 }
-
-/* void onCommand(String game, String action, String playerName) {
-
-    if (game != "birdiesays") return;
-
-    if (action == "start") {
-
-        currentPlayer = playerName;
-
-        birdieStartGame();
-    }
-
-    if (action == "stop") {
-
-        gameRunning = false;
-
-        drawLCD("Game stopped", "");
-    }
-} */
 
 // ---------------- LED ----------------
 
@@ -204,7 +185,6 @@ void birdieInit(){
   Serial.begin(115200);
   randomSeed(millis());
 
-  // IMPORTANT FIX (prevents weird symbols)
   Wire.begin(21, 22);   // ESP32 I2C pins
 
   lcd.init();
@@ -215,16 +195,9 @@ void birdieInit(){
   drawLCD("Birdie Says", "Ready!");
   delay(1500);
 
-  /* score = 0;
-  seqLen = 2; */
-
   for(int i = 0; i < N; i++){
     pinMode(pins[i], INPUT_PULLUP);
   }
-
-  /* for(int i=0;i<seqLen;i++){
-    sequence[i] = random(0, N);
-  } */
 
   Serial.println("Birdie Says Ready!");
 }
@@ -264,14 +237,7 @@ void birdieUpdate(){
     gameOverScreen();
     delay(3000);
 
-    /* seqLen = 2;
-    score = 0;
-
-    for(int i=0;i<seqLen;i++){
-      sequence[i] = random(0, N);
-    } */
-
-    gameRunning = false;   // STOP GAME HERE
+    gameRunning = false;
 
     return;
   }

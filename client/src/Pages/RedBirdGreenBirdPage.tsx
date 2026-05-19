@@ -35,7 +35,7 @@ export default function RedBirdGreenBirdPage() {
         }
 
         sendCommand(name, {
-            action: "startGame",
+            action: "start",
             game: "redbirdgreenbird"
         });
     };
@@ -58,6 +58,10 @@ export default function RedBirdGreenBirdPage() {
         };
 
         loadScores();
+
+        const interval = setInterval(loadScores, 2000);
+
+        return () => clearInterval(interval);
 
     }, []);
 

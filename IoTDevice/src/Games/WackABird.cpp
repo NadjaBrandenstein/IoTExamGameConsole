@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "MqttClient.h"
+#include "System/MqttClient.h"
 
 extern String playerName;
 
@@ -101,43 +101,43 @@ void allLEDsOff()
 
 bool targetRound(int pin, unsigned long timeoutMs)
 {
-    // LIGHT LED
+    // LED ON
     pinMode(pin, OUTPUT);
-
     digitalWrite(pin, HIGH);
-
-    delay(50);
-
-    // IMPORTANT:
-    // switch ALL back to buttons
-    allPinsInput();
 
     unsigned long start = millis();
 
-    while(millis() - start < timeoutMs)
+    bool hit = false;
+
+    while (millis() - start < timeoutMs)
     {
-        if(digitalRead(pin) == LOW)
+        if (digitalRead(pin) == LOW)
         {
             delay(25);
 
-            if(digitalRead(pin) == LOW)
+            if (digitalRead(pin) == LOW)
             {
                 Serial.println("HIT");
-
-                allLEDsOff();
-
-                return true;
+                hit = true;
+                break;
             }
         }
 
         delay(5);
     }
 
-    Serial.println("MISS");
+    // turn LED OFF AFTER round
+    digitalWrite(pin, LOW);
 
-    allLEDsOff();
+    // reset all pins AFTER round
+    allPinsInput();
 
-    return false;
+    if (!hit)
+    {
+        Serial.println("MISS");
+    }
+
+    return hit;
 }
 
 // ---------------- SETUP ----------------
@@ -202,7 +202,7 @@ void whackUpdate()
     int timeLeft =
         (GAME_TIME - (millis() - gameStart)) / 1000;
 
-    bool hit = targetRound(pin, 2000);
+    bool hit = targetRound(pin, 2000); // Time to hit the target
 
     if(hit)
     {
