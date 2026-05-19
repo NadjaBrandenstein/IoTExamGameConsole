@@ -3,8 +3,8 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include "config.h"
-#include "MqttClient.h"
-#include "GameManager.h"
+#include "System/MqttClient.h"
+#include "Core/GameManager.h"
 
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
@@ -15,6 +15,7 @@ String gameName = "";
 String deviceId = "firebeetle01";
 void birdieStartGame();
 void whackStartGame();
+void redGreenStartGame();
 
 // Topics 
 String pubTopic;
@@ -109,6 +110,22 @@ void onMessageReceived(char* topic, byte* payload, unsigned int length)
 
         whackStartGame();
     }
+
+    // ---------------- RED BIRD GREEN BIRD ----------------
+
+    if (
+        strcmp(game, "redbirdgreenbird") == 0 &&
+        strcmp(action, "start") == 0
+    )
+    {
+        gameName = "redbirdgreenbird";
+
+        Serial.println("Starting Red Bird Green Bird");
+
+        setGame(GAME_RED_BIRD_GREEN_BIRD);
+
+        redGreenStartGame();
+    }
 }
 
 // ---------------- PUBLISH ----------------
@@ -176,8 +193,6 @@ void mqttSetup() {
     Serial.println("\nMQTT Setup");
     Serial.println("======================");
 
-    //pinMode(LDR_PIN, INPUT);
-
     connectWiFi();
 
     // Default topics
@@ -196,10 +211,8 @@ void mqttSetup() {
 
     Serial.println("MQTT callback registered");
 
-
     // Connect and subscribe
     connectMqtt();
-
 }
 
 // ---------------- LOOP ----------------
@@ -215,13 +228,7 @@ void mqttLoop() {
         connectMqtt();
     }
 
-    mqttClient.loop(); // REQUIRED for receiving messages
-
-
-     /* if (millis() - lastPublish > 5000) {
-        lastPublish = millis();
-        publishSensorData();
-    } */
+    mqttClient.loop();
 
     delay(10); 
 }

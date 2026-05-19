@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "GameManager.h"
-#include "MqttClient.h"
+#include "Core/GameManager.h"
+#include "System/MqttClient.h"
 #include "config.h"
 
 // External game functions
@@ -10,13 +10,8 @@ void birdieUpdate();
 void whackInit();
 void whackUpdate();
 
-// External MQTT variables (defined in MqttClient.cpp)
-/* extern String playerName;
-extern String gameName;
-extern String pubTopic;
-extern String subTopic;
-
-extern const char* MQTT_BASE_TOPIC;  */
+void redGreenInit();
+void redGreenUpdate();
 
 GameState currentGame = GAME_NONE;
 
@@ -36,6 +31,12 @@ void setGame(GameState newGame) {
             Serial.println("Starting Whack-A-Bird...");
             gameName = "whackabird";
             whackInit();
+            break;
+
+        case GAME_RED_BIRD_GREEN_BIRD:
+            Serial.println("Starting Red Bird Green Bird...");
+            gameName = "redbirdgreenbird";
+            redGreenInit();
             break;
 
         default:
@@ -66,6 +67,10 @@ void updateGame() {
 
         case GAME_WACK_A_BIRD:
             whackUpdate();
+            break;
+
+        case GAME_RED_BIRD_GREEN_BIRD:
+            redGreenUpdate();
             break;
 
         default:
