@@ -9,13 +9,19 @@ import bird4 from "../assets/bird4.png";
 
 import Bird from "../Components/Bird.tsx";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
 import type { Redbirdgreenbirdscore } from "../generated-ts-client";
+
+import { StateleSSEClient } from "statele-sse";
+
+const sse = new StateleSSEClient(
+    "http://localhost:5000/api/WebApi/sse"
+);
 
 export default function RedBirdGreenBirdPage() {
 
@@ -28,42 +34,60 @@ export default function RedBirdGreenBirdPage() {
     const [scores, setScores] =
         useState<Redbirdgreenbirdscore[]>([]);
 
+    const cleanupRef =
+        useRef<(() => void) | null>(null);
+
+    // ---------------- START GAME ----------------
+
     const startGame = () => {
 
         if (!name) {
             return alert("Please enter a name!");
         }
 
-        sendCommand(name, {
+        sendCommand("firebeetle01", {
+            game: "redbirdgreenbird",
             action: "start",
-            game: "redbirdgreenbird"
+            playerName: name
         });
     };
 
+    // ---------------- REALTIME SSE ----------------
+
     useEffect(() => {
 
-        const loadScores = async () => {
+        // cleanup previous listener
+        if (cleanupRef.current) {
+            cleanupRef.current();
+        }
 
-            try {
+        const cleanup = sse.listen(
+
+            async (connectionId) => {
+
+                console.log("SSE connection ID:", connectionId);
 
                 const response =
-                    await webClient.getRedbirdScores(undefined);
+                    await webClient.getRedbirdScores(connectionId);
 
-                setScores(response.data || []);
+                return response;
+            },
 
-            } catch (err) {
+            (data) => {
 
-                console.error("Failed to load scores", err);
+                console.log("Realtime update:", data);
+
+                setScores(data);
             }
-        };
+        );
 
-        loadScores();
+        cleanupRef.current = cleanup;
 
-        const interval = setInterval(loadScores, 2000);
-
-        return () => clearInterval(interval);
+        return () => cleanup?.();
 
     }, []);
+
+    // ---------------- UI ----------------
 
     return (
         <div className="redbird-page">

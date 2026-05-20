@@ -3,6 +3,8 @@
 #include <LiquidCrystal_I2C.h>
 #include "System/MqttClient.h"
 
+extern String playerName;
+
 constexpr uint8_t  PIN_PIR    = 15;
 constexpr uint8_t  PIN_BUTTON = 26;
 
@@ -26,7 +28,7 @@ constexpr uint32_t RED_MAX_MS   = 3500;
 enum class State : uint8_t {
     TITLE,
     WAITING,
-    COUNTDOWN,
+    //COUNTDOWN,
     GREEN_LIGHT,
     RED_LIGHT,
     CAUGHT,
@@ -42,7 +44,7 @@ uint32_t gLastBtnPress = 0;
 bool     gPirReady     = false;
 uint32_t gRedEntryTime = 0;
 
-// ── LED helpers ───────────────────────────────────────────────
+// ---------------- LCD Helpers ----------------
 
 void ledsOn()
 {
@@ -56,7 +58,7 @@ void ledsOff()
         digitalWrite(LED_PINS[i], LOW);
 }
 
-// ── Helpers ──────────────────────────────────────────────────
+// ---------------- Helpers ----------------
 
 bool movementDetected()
 {
@@ -85,13 +87,13 @@ int calculateScore(uint32_t elapsedMs)
     return max(0, MAX_SCORE - penalty);
 }
 
-// ── LCD helpers ───────────────────────────────────────────────
+// ---------------- LCD Helpers ----------------
 
 void showTitle()
 {
     lcd.clear();
     lcd.setCursor(0, 0); lcd.print(" GREEN / RED  ");
-    lcd.setCursor(0, 1); lcd.print("    LIGHT!    ");
+    lcd.setCursor(0, 1); lcd.print("    BIRD!    ");
 }
 
 void showWaiting()
@@ -111,14 +113,14 @@ void showCountdown(int n)
 void showGreenLight()
 {
     lcd.clear();
-    lcd.setCursor(0, 0); lcd.print("** GREEN LIGHT *");
+    lcd.setCursor(0, 0); lcd.print("** GREEN BIRD *");
     lcd.setCursor(0, 1); lcd.print(" MOVE FORWARD!  ");
 }
 
 void showRedLight()
 {
     lcd.clear();
-    lcd.setCursor(0, 0); lcd.print("*** RED LIGHT **");
+    lcd.setCursor(0, 0); lcd.print("*** RED BIRD **");
     lcd.setCursor(0, 1); lcd.print("   FREEZE!!!    ");
 }
 
@@ -139,9 +141,44 @@ void showWin(int score)
     lcd.print(buf);
 }
 
-// ── Setup ─────────────────────────────────────────────────────
+// ---------------- Start Game ----------------
 
-void setup()
+void redGreenStartGame()
+{
+    Serial.println("Red Green Game START");
+
+    gGameStart = millis();
+
+    gPhaseStart = millis();
+
+    gPhaseDuration =
+        random(GREEN_MIN_MS, GREEN_MAX_MS);
+
+    gPirReady = false;
+
+    gRedEntryTime = 0;
+
+    showCountdown(3);
+
+    delay(1000);
+
+    showCountdown(2);
+
+    delay(1000);
+
+    showCountdown(1);
+
+    delay(1000);
+
+    showGreenLight();
+
+    gState = State::GREEN_LIGHT;
+}
+
+
+// ---------------- Setup ----------------
+
+void redGreenInit()
 {
     Serial.begin(115200);
 
@@ -158,15 +195,16 @@ void setup()
     lcd.init();
     lcd.backlight();
 
-    randomSeed(analogRead(34));
+    //randomSeed(analogRead(34));
+    randomSeed(analogRead(0));
 
     showTitle();
     gState = State::TITLE;
 }
 
-// ── Loop ──────────────────────────────────────────────────────
+// ---------------- Loop ----------------
 
-void loop()
+void redGreenUpdate()
 {
     switch (gState) {
 
@@ -186,12 +224,12 @@ void loop()
     // Switch back to input to read button
     pinMode(PIN_BUTTON, INPUT_PULLUP);
     
-    if (buttonJustPressed()) {
+    /* if (buttonJustPressed()) {
         gState = State::COUNTDOWN;
-    }
+    } */
     break;
 
-    case State::COUNTDOWN:
+    /* case State::COUNTDOWN:
         ledsOff();
         for (int i = 3; i >= 1; i--) {
             showCountdown(i);
@@ -203,7 +241,7 @@ void loop()
         showGreenLight();
         ledsOn();   // GREEN phase starts → LEDs on
         gState = State::GREEN_LIGHT;
-        break;
+        break; */
 
     case State::GREEN_LIGHT:
         if (buttonJustPressed()) {
@@ -212,6 +250,7 @@ void loop()
             ledsOff();
             showWin(score);
             Serial.printf("[WIN] elapsed=%lu ms  score=%d\n", elapsed, score);
+            publishScore(playerName, score);
             gState = State::WIN;
             break;
         }
@@ -237,6 +276,7 @@ void loop()
             ledsOff();
             showCaught();
             Serial.println("[CAUGHT] movement on red");
+            publishScore(playerName, 0);
             gState = State::CAUGHT;
             break;
         }
@@ -246,6 +286,7 @@ void loop()
             ledsOff();
             showWin(score);
             Serial.printf("[WIN on RED] elapsed=%lu ms  score=%d\n", elapsed, score);
+            publishScore(playerName, score);
             gState = State::WIN;
             break;
         }
