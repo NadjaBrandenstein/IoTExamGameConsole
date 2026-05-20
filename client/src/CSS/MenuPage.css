@@ -1,11 +1,25 @@
 /* =========================
+   GLOBAL VARIABLES
+========================= */
+
+:root {
+
+    /* title spacing from top */
+    --title-offset: 35px;
+
+    /* image scaling */
+    --center-image-size: 32vw;
+    --side-image-size: 22vw;
+}
+
+/* =========================
    TITLE
 ========================= */
 
 .title-menu {
     position: absolute;
 
-    top: 20px;
+    top: var(--title-offset);
 
     left: 50%;
 
@@ -25,17 +39,41 @@
 }
 
 /* =========================
+   PAGE CONTENT
+========================= */
+
+.page-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    gap: clamp(20px, 3vh, 40px);
+
+    padding-top: 80px;
+
+    text-align: center;
+}
+
+/* =========================
    CAROUSEL WRAPPER
 ========================= */
 
 .carousel {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     gap: clamp(5px, 2vw, 20px);
 
     width: 100%;
+
     padding: 20px;
 }
 
@@ -45,6 +83,7 @@
 
 .carousel-track {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -58,9 +97,11 @@
 ========================= */
 
 .carousel-center img {
-    width: clamp(120px, 22vw, 300px);
-    height: clamp(120px, 22vw, 300px);
 
+    /* responsive scaling */
+    width: clamp(220px, var(--center-image-size), 380px);
+
+    aspect-ratio: 1 / 1;
 
     object-fit: cover;
 
@@ -78,8 +119,10 @@
 ========================= */
 
 .carousel-side img {
-    width: clamp(100px, 18vw, 240px);
-    height: clamp(100px, 18vw, 240px);
+
+    width: clamp(120px, var(--side-image-size), 240px);
+
+    aspect-ratio: 1 / 1;
 
     object-fit: cover;
 
@@ -91,6 +134,7 @@
 }
 
 /* optional side image styling */
+
 .carousel-side.left img,
 .carousel-side.right img {
     filter: brightness(0.8);
@@ -102,6 +146,7 @@
 
 .menu-arrow {
     background: transparent;
+
     border: none;
 
     color: orange;
@@ -120,18 +165,23 @@
 }
 
 /* hover glow */
+
 .menu-arrow:hover {
     text-shadow: 0 0 10px orange;
+
     transform: scale(1.1);
 }
 
 /* click effect */
+
 .menu-arrow:active {
     transform: scale(0.95);
 }
 
 /* floating animation */
+
 @keyframes floatArrow {
+
     0% {
         transform: translateY(0px);
     }
@@ -159,6 +209,7 @@
 
 .clickable-card:hover {
     transform: scale(1.08);
+
     filter: brightness(1.1);
 }
 
@@ -179,7 +230,9 @@
 
     text-align: center;
 
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* =========================
@@ -191,6 +244,7 @@
 
     display: flex;
     flex-direction: column;
+
     align-items: center;
 
     max-width: 100%;
@@ -209,34 +263,14 @@
 }
 
 /* =========================
-   PAGE CONTENT
-========================= */
-
-.page-content {
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-
-    gap: clamp(20px, 3vh, 40px);
-
-    padding-top: 80px;
-}
-
-/* =========================
    BIRDS
 ========================= */
 
 .bird {
     position: absolute;
 
-    width: clamp(60px, 10vw, 150px);
-    height: clamp(60px, 10vw, 150px);
+    width: min(160px, 16vh);
+    height: min(160px, 16vh);
 
     object-fit: contain;
 
@@ -246,6 +280,7 @@
 }
 
 /* corners */
+
 .top-left {
     top: 10px;
     left: 10px;
@@ -296,7 +331,7 @@ img {
 }
 
 /* =========================
-   MOBILE RESPONSIVE
+   TABLET
 ========================= */
 
 @media (max-width: 768px) {
@@ -310,30 +345,33 @@ img {
     }
 
     .rules-box {
-        bottom: 20px;
         width: 90%;
     }
 
     .rules-content {
         font-size: 14px;
     }
+
+    :root {
+        --center-image-size: 40vw;
+        --side-image-size: 26vw;
+    }
 }
 
 /* =========================
-   EXTRA SMALL DEVICES
+   MOBILE
 ========================= */
 
 @media (max-width: 600px) {
 
     /* hide side images */
+
     .carousel-side {
         display: none;
     }
 
-    /* make center image larger */
     .carousel-center img {
         width: 70vw;
-        height: 70vw;
     }
 
     .carousel {
@@ -341,34 +379,41 @@ img {
     }
 
     .title-menu {
-        font-size: clamp(28px, 10vw, 48px);
+        font-size: clamp(24px, 8vw, 42px);
     }
 
     .bird {
         width: 60px;
         height: 60px;
     }
+
+    .page-content {
+        padding-top: 60px;
+    }
 }
+
+/* =========================
+   SHORT HEIGHT SCREENS
+========================= */
 
 @media (max-height: 800px) {
 
     .title-menu {
         font-size: clamp(24px, 4vw, 48px);
-        top: 10px;
     }
 
     .carousel-center img {
-        width: clamp(140px, 22vw, 260px);
-        height: clamp(140px, 22vw, 260px);
+        width: clamp(180px, 26vw, 300px);
     }
 
     .carousel-side img {
-        width: clamp(80px, 14vw, 180px);
-        height: clamp(80px, 14vw, 180px);
+        width: clamp(90px, 16vw, 180px);
     }
 
     .rules-content {
         font-size: 12px;
+
+        line-height: 1.2;
     }
 
     .bird {
@@ -377,7 +422,8 @@ img {
     }
 
     .page-content {
-        margin-top: 80px;
+        padding-top: 50px;
+
         gap: 10px;
     }
 }
