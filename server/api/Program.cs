@@ -108,7 +108,7 @@ public class Program
             {
                 policy
                     .WithOrigins(
-                        //"https://windmill-farm-client.fly.dev",
+                        "https://birdbox-games.fly.dev",
                         "http://localhost:5173",
                         "http://localhost:5174"
                     )

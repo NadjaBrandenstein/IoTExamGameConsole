@@ -7,18 +7,19 @@ import bird4 from "../assets/bird4.png";
 import Bird from "../Components/Bird.tsx";
 import WhackABirdRules from "../Components/Rules/WhackABirdRules.tsx";
 
-import {useEffect, useRef, useState} from "react";
+//import {useEffect, useRef, useState} from "react";
 import { useLocation } from "react-router-dom";
 
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
 import type { Whackabirdscore } from "../generated-ts-client";
-import {StateleSSEClient} from "statele-sse";
+//import {StateleSSEClient} from "statele-sse";
+import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
 
-const sse = new StateleSSEClient(
-    "http://localhost:5000/api/WebApi/sse"
-);
+// const sse = new StateleSSEClient(
+//     "http://localhost:5000/api/WebApi/sse"
+// );
 
 export default function WackAMolePage() {
 
@@ -26,9 +27,19 @@ export default function WackAMolePage() {
     const name = location.state?.name || "Player";
 
     const { sendCommand } = useCommand();
-    const [scores, setScores] = useState<Whackabirdscore[]>([]);
+    // const [scores, setScores] = useState<Whackabirdscore[]>([]);
+    //
+    // const cleanupRef = useRef<(() => void) | null>(null);
 
-    const cleanupRef = useRef<(() => void) | null>(null);
+    const scores = useRealtimeScores<Whackabirdscore>(
+        async (connectionId) => {
+
+            const response =
+                await webClient.getWhackabirdScores(connectionId);
+
+            return response.data || [];
+        }
+    );
 
     // ---------------- START GAME ----------------
 
@@ -47,37 +58,37 @@ export default function WackAMolePage() {
 
     // ---------------- REALTIME SSE ----------------
 
-    useEffect(() => {
-
-        if (cleanupRef.current) {
-            cleanupRef.current();
-        }
-
-        const cleanup = sse.listen(
-
-            async (connectionId) => {
-
-                console.log("SSE connection ID:", connectionId);
-
-                const response =
-                    await webClient.getWhackabirdScores(connectionId);
-
-                return response;
-            },
-
-            (data) => {
-
-                console.log("Realtime update:", data);
-
-                setScores(data);
-            }
-        );
-
-        cleanupRef.current = cleanup;
-
-        return () => cleanup?.();
-
-    }, []);
+    // useEffect(() => {
+    //
+    //     if (cleanupRef.current) {
+    //         cleanupRef.current();
+    //     }
+    //
+    //     const cleanup = sse.listen(
+    //
+    //         async (connectionId) => {
+    //
+    //             console.log("SSE connection ID:", connectionId);
+    //
+    //             const response =
+    //                 await webClient.getWhackabirdScores(connectionId);
+    //
+    //             return response;
+    //         },
+    //
+    //         (data) => {
+    //
+    //             console.log("Realtime update:", data);
+    //
+    //             setScores(data);
+    //         }
+    //     );
+    //
+    //     cleanupRef.current = cleanup;
+    //
+    //     return () => cleanup?.();
+    //
+    // }, []);
 
     // ---------------- UI ----------------
 

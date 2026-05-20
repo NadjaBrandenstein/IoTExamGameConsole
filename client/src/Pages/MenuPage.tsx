@@ -12,20 +12,23 @@ import bird1 from "../assets/bird1.png";
 import bird2 from "../assets/bird2.png";
 import bird3 from "../assets/bird3.png";
 import bird4 from "../assets/bird4.png";
+import birdieSaysImg from "../assets/birdie_says.png";
+import whackABirdImg from "../assets/whack a bird.png";
+import redBirdGreenBirdImg from "../assets/Redbird_GreenBird.png";
 
 const games = [
     {
-        img: "/src/assets/birdie_says.png",
+        img: birdieSaysImg,
         rules: <BirdieSaysRules />,
         route: "/birdie-says"
     },
     {
-        img: "/src/assets/whack a bird.png",
+        img: whackABirdImg,
         rules: <WhackABirdRules />,
         route: "/whack-a-bird"
     },
     {
-        img: "/src/assets/Redbird_GreenBird.png",
+        img: redBirdGreenBirdImg,
         rules: <RedBirdGreenBirdRules />,
         route: "/red-bird-green-bird"
     }
