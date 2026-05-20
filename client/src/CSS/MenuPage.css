@@ -1,57 +1,157 @@
+/* =========================
+   TITLE
+========================= */
+
 .title-menu {
     position: absolute;
+
     top: 40px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
     color: orange;
+
     margin: 0;
-    font-size: clamp(48px, 24vw, 96px);
+
+    font-size: clamp(32px, 8vw, 96px);
+
+    text-align: center;
+
+    z-index: 5;
 }
+
+/* =========================
+   CAROUSEL WRAPPER
+========================= */
 
 .carousel {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-}
 
-/* wrapper for the 3 images */
-.carousel-track {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-}
+    gap: clamp(5px, 2vw, 20px);
 
-/* CENTER IMAGE */
-.carousel-center img {
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-    transform: scale(1.05);
-    z-index: 2;
-}
-
-/* SIDE IMAGES */
-.carousel-side img {
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    opacity: 0.6;
-    border-radius: 10px;
-}
-
-/* arrows */
-.menu-arrow {
-    background: transparent;
-    border: none;
-    color: orange;
-    font-size: 150px;
-    cursor: pointer;
+    width: 100%;
     padding: 20px;
 }
 
+/* =========================
+   TRACK (3 IMAGES)
+========================= */
+
+.carousel-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: clamp(10px, 3vw, 50px);
+
+    width: 100%;
+}
+
+/* =========================
+   CENTER IMAGE
+========================= */
+
+.carousel-center img {
+    width: clamp(180px, 30vw, 400px);
+    height: clamp(180px, 30vw, 400px);
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    transform: scale(1.05);
+
+    z-index: 2;
+
+    transition: transform 0.2s ease;
+}
+
+/* =========================
+   SIDE IMAGES
+========================= */
+
+.carousel-side img {
+    width: clamp(120px, 22vw, 300px);
+    height: clamp(120px, 22vw, 300px);
+
+    object-fit: cover;
+
+    opacity: 0.6;
+
+    border-radius: 12px;
+
+    transition: 0.2s ease;
+}
+
+/* optional side image styling */
+.carousel-side.left img,
+.carousel-side.right img {
+    filter: brightness(0.8);
+}
+
+/* =========================
+   ARROWS
+========================= */
+
+.menu-arrow {
+    background: transparent;
+    border: none;
+
+    color: orange;
+
+    font-size: clamp(40px, 8vw, 150px);
+
+    cursor: pointer;
+
+    padding: clamp(5px, 1vw, 20px);
+
+    transition:
+            transform 0.2s ease,
+            text-shadow 0.2s ease;
+
+    animation: floatArrow 2s infinite ease-in-out;
+}
+
+/* hover glow */
+.menu-arrow:hover {
+    text-shadow: 0 0 10px orange;
+    transform: scale(1.1);
+}
+
+/* click effect */
+.menu-arrow:active {
+    transform: scale(0.95);
+}
+
+/* floating animation */
+@keyframes floatArrow {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* =========================
+   CLICKABLE CARD
+========================= */
+
 .clickable-card {
     cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
+
+    transition:
+            transform 0.2s ease,
+            filter 0.2s ease;
 }
 
 .clickable-card:hover {
@@ -63,54 +163,42 @@
     transform: scale(0.95);
 }
 
-.menu-carousel {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.menu-card {
-    width: 160px;
-    height: 90px;
-    background: lightgray;
-}
-
-
-@keyframes floatArrow {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-2px); }
-    100% { transform: translateY(0px); }
-}
-
-.menu-arrow {
-    animation: floatArrow 2s infinite ease-in-out;
-}
-
-/* hover glow */
-.menu-arrow:hover {
-    text-shadow: 0 0 10px orange;
-    transform: scale(1.1);
-}
-
-/* click press effect */
-.menu-arrow:active {
-    transform: scale(0.95);
-}
+/* =========================
+   RULES BOX
+========================= */
 
 .rules-box {
     position: absolute;
-    bottom: 60px;
+
+    bottom: clamp(10px, 5vh, 60px);
+
     left: 50%;
+
     transform: translateX(-50%);
+
     color: orange;
+
+    width: min(90vw, 600px);
+
+    padding: 10px;
 }
+
+/* =========================
+   RULES CONTENT
+========================= */
 
 .rules-content {
     text-align: center;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
+
+    max-width: 100%;
+
+    font-size: clamp(12px, 1.5vw, 5px);
+
+    line-height: 1.5;
 }
 
 .rules-content h3 {
@@ -119,7 +207,146 @@
 
 .rules-content p {
     margin: 0;
-    line-height: 1.5;
 }
 
+/* =========================
+   PAGE CONTENT
+========================= */
 
+.page-content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: clamp(10px, 2vw, 20px);
+
+    text-align: center;
+
+    width: 100%;
+
+    padding: 20px;
+}
+
+/* =========================
+   BIRDS
+========================= */
+
+.bird {
+    position: absolute;
+
+    width: clamp(60px, 10vw, 150px);
+    height: clamp(60px, 10vw, 150px);
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+/* corners */
+.top-left {
+    top: 10px;
+    left: 10px;
+}
+
+.top-right {
+    top: 10px;
+    right: 10px;
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 10px;
+}
+
+.bottom-right {
+    bottom: 10px;
+    right: 10px;
+}
+
+/* =========================
+   GLOBAL IMAGE FIX
+========================= */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   INPUT RESPONSIVE
+========================= */
+
+.input {
+    width: min(400px, 90vw);
+
+    padding: 10px;
+
+    border: none;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.2);
+
+    color: orange;
+
+    outline: none;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .carousel-track {
+        gap: 10px;
+    }
+
+    .menu-arrow {
+        font-size: 60px;
+    }
+
+    .rules-box {
+        bottom: 20px;
+        width: 90%;
+    }
+
+    .rules-content {
+        font-size: 14px;
+    }
+}
+
+/* =========================
+   EXTRA SMALL DEVICES
+========================= */
+
+@media (max-width: 600px) {
+
+    /* hide side images */
+    .carousel-side {
+        display: none;
+    }
+
+    /* make center image larger */
+    .carousel-center img {
+        width: 70vw;
+        height: 70vw;
+    }
+
+    .carousel {
+        gap: 0;
+    }
+
+    .title-menu {
+        font-size: clamp(28px, 10vw, 48px);
+    }
+
+    .bird {
+        width: 60px;
+        height: 60px;
+    }
+}
