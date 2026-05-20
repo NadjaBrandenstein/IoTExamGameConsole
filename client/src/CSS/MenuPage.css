@@ -5,7 +5,7 @@
 .title-menu {
     position: absolute;
 
-    top: 40px;
+    top: 20px;
 
     left: 50%;
 
@@ -15,11 +15,13 @@
 
     margin: 0;
 
-    font-size: clamp(32px, 8vw, 96px);
+    font-size: clamp(28px, 5vw, 72px);
 
     text-align: center;
 
     z-index: 5;
+
+    width: 90%;
 }
 
 /* =========================
@@ -56,8 +58,9 @@
 ========================= */
 
 .carousel-center img {
-    width: clamp(180px, 30vw, 400px);
-    height: clamp(180px, 30vw, 400px);
+    width: clamp(120px, 22vw, 300px);
+    height: clamp(120px, 22vw, 300px);
+
 
     object-fit: cover;
 
@@ -75,8 +78,8 @@
 ========================= */
 
 .carousel-side img {
-    width: clamp(120px, 22vw, 300px);
-    height: clamp(120px, 22vw, 300px);
+    width: clamp(100px, 18vw, 240px);
+    height: clamp(100px, 18vw, 240px);
 
     object-fit: cover;
 
@@ -168,19 +171,15 @@
 ========================= */
 
 .rules-box {
-    position: absolute;
-
-    bottom: clamp(10px, 5vh, 60px);
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
     color: orange;
 
     width: min(90vw, 600px);
 
     padding: 10px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
 }
 
 /* =========================
@@ -196,7 +195,7 @@
 
     max-width: 100%;
 
-    font-size: clamp(12px, 1.5vw, 5px);
+    font-size: clamp(12px, 1.2vw, 18px);
 
     line-height: 1.5;
 }
@@ -214,19 +213,19 @@
 ========================= */
 
 .page-content {
+    flex: 1;
+
     display: flex;
     flex-direction: column;
 
-    align-items: center;
     justify-content: center;
-
-    gap: clamp(10px, 2vw, 20px);
-
-    text-align: center;
+    align-items: center;
 
     width: 100%;
 
-    padding: 20px;
+    gap: clamp(20px, 3vh, 40px);
+
+    padding-top: 80px;
 }
 
 /* =========================
@@ -348,5 +347,37 @@ img {
     .bird {
         width: 60px;
         height: 60px;
+    }
+}
+
+@media (max-height: 800px) {
+
+    .title-menu {
+        font-size: clamp(24px, 4vw, 48px);
+        top: 10px;
+    }
+
+    .carousel-center img {
+        width: clamp(140px, 22vw, 260px);
+        height: clamp(140px, 22vw, 260px);
+    }
+
+    .carousel-side img {
+        width: clamp(80px, 14vw, 180px);
+        height: clamp(80px, 14vw, 180px);
+    }
+
+    .rules-content {
+        font-size: 12px;
+    }
+
+    .bird {
+        width: 50px;
+        height: 50px;
+    }
+
+    .page-content {
+        margin-top: 80px;
+        gap: 10px;
     }
 }
