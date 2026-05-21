@@ -1,6 +1,6 @@
 export default function WhackABirdRules(){
     return (
-        <div className="rules-content">
+        <div className="rules-box">
             <h3>Whack A Bird</h3>
             <p>
                 You have 30 secounds to hit as meny targets as possible

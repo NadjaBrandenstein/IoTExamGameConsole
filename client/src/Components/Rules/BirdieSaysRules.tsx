@@ -1,6 +1,6 @@
 export default function BirdieSaysRules() {
     return (
-        <div className="rules-content">
+        <div className="rules-box">
             <h3>Birdie Says</h3>
             <p>
                 A light sequence will show and you will have to hit

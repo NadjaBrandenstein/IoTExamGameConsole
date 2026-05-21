@@ -1,6 +1,6 @@
 export default function RedBirdGreenBirdRules(){
     return (
-        <div className="rules-content">
+        <div className="rules-box">
             <h3>RedBirdGreenBird</h3>
             <p>
                 Start 3 meter from the device and move as fast
