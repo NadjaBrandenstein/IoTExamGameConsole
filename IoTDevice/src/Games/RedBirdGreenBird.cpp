@@ -83,7 +83,7 @@ bool buttonJustPressed()
 
 int calculateScore(uint32_t elapsedMs)
 {
-    int penalty = static_cast<int>(elapsedMs / 100);
+    int penalty = static_cast<int>(elapsedMs / 6);
     return max(0, MAX_SCORE - penalty);
 }
 
