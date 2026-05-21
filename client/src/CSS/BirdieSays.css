@@ -25,7 +25,7 @@
     flex-direction: column;
     align-items: center;
 
-    gap: 30px;
+    gap: clamp(12px, 2vh, 24px);
 }
 
 /* =========================
@@ -180,11 +180,12 @@
 
     padding-bottom: 12px;
 
-    font-size: 20px;
+    font-size: clamp(22px, 2.5vw, 28px);
 }
 
 .score-table td {
     padding: 8px 16px;
+    font-size: clamp(14px, 2vw, 22px);
 }
 
 /* =========================
@@ -202,7 +203,7 @@
 
     color: orange;
 
-    font-size: clamp(14px, 2vw, 18px);
+    font-size: clamp(14px, 2vw, 24px);
 
     cursor: pointer;
 

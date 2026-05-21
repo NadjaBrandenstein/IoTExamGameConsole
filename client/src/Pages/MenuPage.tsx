@@ -100,7 +100,7 @@ export default function MenuPage() {
 
             </div>
             {/* RULES */}
-            <div className="rules-box">
+            <div className="menu-rules-box">
                 {current.rules}
             </div>
         </div>

@@ -123,7 +123,7 @@ export default function WackAMolePage() {
 
                         <span className="rules-icon">?</span>
 
-                        <div className="tooltip-box">
+                        <div className="tooltip-box game-rules-box">
                             <WhackABirdRules />
                         </div>
 
