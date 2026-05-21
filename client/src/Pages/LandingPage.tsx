@@ -36,6 +36,10 @@ export default function LandingPage() {
 
             <div className="page-content">
 
+                <h1 className="game-title">
+                    RETRO BIRDS
+                </h1>
+
                 {/* START TITLE */}
                 {canStart ? (
 

@@ -19,6 +19,7 @@ import type { Redbirdgreenbirdscore } from "../generated-ts-client";
 
 //import { StateleSSEClient } from "statele-sse";
 import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
+import {useCooldown} from "../Hooks/useCooldown.ts";
 
 // const sse = new StateleSSEClient(
 //     "http://localhost:5000/api/WebApi/sse"
@@ -39,6 +40,11 @@ export default function RedBirdGreenBirdPage() {
     // const cleanupRef =
     //     useRef<(() => void) | null>(null);
 
+    const {
+        cooldown,
+        startCooldown
+    } = useCooldown();
+
     const scores =
         useRealtimeScores<Redbirdgreenbirdscore>(
 
@@ -55,6 +61,8 @@ export default function RedBirdGreenBirdPage() {
 
     const startGame = () => {
 
+        if(cooldown > 0) return;
+
         if (!name) {
             return alert("Please enter a name!");
         }
@@ -64,6 +72,8 @@ export default function RedBirdGreenBirdPage() {
             action: "start",
             playerName: name
         });
+
+        startCooldown(30);
     };
 
     // ---------------- REALTIME SSE ----------------
@@ -177,10 +187,19 @@ export default function RedBirdGreenBirdPage() {
                     </button>
 
                     <button
-                        className="birdie-start-btn"
+                        className={`wack-start-btn ${cooldown > 0 ? "disabled" : ""}`}
                         onClick={startGame}
+                        disabled={cooldown > 0}
                     >
-                        START GAME
+                        <span>
+                            START GAME
+                        </span>
+
+                        {cooldown > 0 && (
+                            <span className="cooldown-overlay">
+                                {cooldown}s
+                            </span>
+                        )}
                     </button>
                 </div>
 

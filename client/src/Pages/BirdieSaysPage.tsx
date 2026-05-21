@@ -17,6 +17,7 @@ import bird3 from "../assets/bird3.png";
 import bird4 from "../assets/bird4.png";
 import Bird from "../Components/Bird.tsx";
 import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
+import {useCooldown} from "../Hooks/useCooldown.ts";
 
 // const sse = new StateleSSEClient(
 //     "http://localhost:5000/api/WebApi/sse"
@@ -34,6 +35,11 @@ export default function BirdieSaysPage() {
     //
     // const cleanupRef = useRef<(() => void) | null>(null);
 
+    const {
+        cooldown,
+        startCooldown
+    } = useCooldown();
+
     const scores = useRealtimeScores<Birdiesaysscore>(
         async (connectionId) => {
 
@@ -48,7 +54,7 @@ export default function BirdieSaysPage() {
 
     const startGame = () => {
 
-        console.log("Sending player:", name);
+        if(cooldown > 0) return;
 
         if (!name) {
             return alert("Please enter a name!");
@@ -59,6 +65,8 @@ export default function BirdieSaysPage() {
             action: "start",
             playerName: name
         });
+
+        startCooldown(30);
     };
 
     // ---------------- REALTIME SCOREBOARD ----------------
@@ -173,10 +181,19 @@ export default function BirdieSaysPage() {
                     </button>
 
                     <button
-                        className="birdie-start-btn"
+                        className={`birdie-start-btn ${cooldown > 0 ? "disabled" : ""}`}
                         onClick={startGame}
+                        disabled={cooldown > 0}
                     >
-                        START GAME
+                        <span>
+                            START GAME
+                        </span>
+
+                        {cooldown > 0 && (
+                            <span className="cooldown-overlay">
+                                {cooldown}s
+                            </span>
+                        )}
                     </button>
                 </div>
 

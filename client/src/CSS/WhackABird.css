@@ -2,8 +2,6 @@
     position: fixed;
     inset: 0;
 
-    background: #3732a8;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -186,6 +184,14 @@
     margin-left: 10px;
 
     margin-right: 10px;
+
+    font-family: "Pinscher", sans-serif;
+
+    overflow: hidden;
+
+    isolation: isolate;
+
+    position: relative;
 }
 
 .wack-start-btn:hover {
@@ -196,4 +202,28 @@
 
 .wack-start-btn:active {
     transform: scale(0.95);
+}
+
+.wack-start-btn.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.cooldown-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 32px;
+    font-weight: bold;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: white;
+
+    z-index: 2;
 }

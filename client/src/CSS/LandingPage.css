@@ -1,8 +1,17 @@
+
+.game-title{
+    color: orange;
+    font-size: 200px;
+    margin-top: -20px;
+    margin-bottom: 5px;
+}
+
 .landing-title {
     color: orange;
-    margin: 0;
 
     font-size: clamp(48px, 24vw, 96px);
+
+    margin-top: -10px;
 
     transition:
             transform 0.3s ease,
@@ -78,8 +87,6 @@
 .input {
     width: 400px;
 
-    padding: 14px;
-
     border: none;
 
     border-radius: 10px;
@@ -93,6 +100,9 @@
     outline: none;
 
     font-size: 18px;
+
+    margin-bottom: 80px;
+    margin-top: -60px;
 
     /*transition:*/
     /*        transform 0.2s ease,*/

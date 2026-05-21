@@ -252,6 +252,8 @@
     font-size: clamp(12px, 1.2vw, 18px);
 
     line-height: 1.5;
+
+
 }
 
 .rules-content h3 {
