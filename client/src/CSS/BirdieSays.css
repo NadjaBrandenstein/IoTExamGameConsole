@@ -146,7 +146,8 @@
 ========================= */
 
 .birdie-score-box {
-    width: min(400px, 70vw);
+    width: min(420px, 70vw);
+
     min-height: 220px;
 
     background: rgba(255,255,255,0.15);
@@ -208,6 +209,10 @@
     cursor: pointer;
 
     transition: 0.2s ease;
+
+    margin-left: 10px;
+
+    margin-right: 10px;
 }
 
 .birdie-start-btn:hover {
