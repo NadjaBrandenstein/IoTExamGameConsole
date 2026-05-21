@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { StateleSSEClient } from "statele-sse";
 
+import { finalBaseUrl } from "../BaseUrl.ts";
+
 const sse = new StateleSSEClient(
-    "https://iot-game-console-server.fly.dev/"
+    `${finalBaseUrl}/api/WebApi/sse`
 );
 
 export function useRealtimeScores<T>(
