@@ -10,7 +10,7 @@ import bird4 from "../assets/bird4.png";
 import Bird from "../Components/Bird.tsx";
 
 //import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
@@ -27,6 +27,7 @@ import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
 export default function RedBirdGreenBirdPage() {
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     const name = location.state?.name || "Player";
 
@@ -46,7 +47,7 @@ export default function RedBirdGreenBirdPage() {
                 const response =
                     await webClient.getRedbirdScores(connectionId);
 
-                return response.data || [];
+                return response || [];
             }
         );
 
@@ -163,12 +164,25 @@ export default function RedBirdGreenBirdPage() {
                 </div>
 
                 {/* BUTTON */}
-                <button
-                    className="redbird-start-btn"
-                    onClick={startGame}
-                >
-                    START GAME
-                </button>
+                <div>
+                    <button
+                        className="redbird-start-btn"
+                        onClick={() =>
+                            navigate("/menu", {
+                                state: { name }
+                            })
+                        }
+                    >
+                        RETURN TO MENU
+                    </button>
+
+                    <button
+                        className="birdie-start-btn"
+                        onClick={startGame}
+                    >
+                        START GAME
+                    </button>
+                </div>
 
             </div>
 

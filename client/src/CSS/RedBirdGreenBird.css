@@ -119,7 +119,7 @@
 ========================= */
 
 .redbird-score-box {
-    width: min(400px, 70vw);
+    width: min(420px, 70vw);
 
     min-height: 220px;
 
@@ -182,6 +182,10 @@
     cursor: pointer;
 
     transition: 0.2s ease;
+
+    margin-left: 10px;
+
+    margin-right: 10px;
 }
 
 .redbird-start-btn:hover {

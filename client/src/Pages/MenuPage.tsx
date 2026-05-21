@@ -1,8 +1,7 @@
 import "../CSS/App.css";
 import "../CSS/MenuPage.css"
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Bird from "../Components/Bird.tsx";
 import WhackABirdRules from "../Components/Rules/WhackABirdRules.tsx";
 import BirdieSaysRules from "../Components/Rules/BirdieSaysRules.tsx";
