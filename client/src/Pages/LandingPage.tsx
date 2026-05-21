@@ -42,20 +42,16 @@ export default function LandingPage() {
 
                 {/* START TITLE */}
                 {canStart ? (
-
                     <h1
                         className="landing-title clickable"
                         onClick={startGame}
                     >
                         START GAME
                     </h1>
-
                 ) : (
-
                     <h1 className="landing-title disabled-title">
                         START GAME
                     </h1>
-
                 )}
 
                 {/* INPUT */}

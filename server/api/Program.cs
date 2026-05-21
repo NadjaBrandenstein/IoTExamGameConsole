@@ -2,16 +2,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using api;
 using api.Service;
-// using api.Security;
-// using api.Service;
-// using dataaccess.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using dataaccess.MyDbContext;
-// using dataaccess.Repositories;
 using Mqtt.Controllers;
-using MQTTnet;
 using StateleSSE.AspNetCore;
 using StateleSSE.AspNetCore.GroupRealtime;
 
@@ -25,11 +19,6 @@ public class Program
         var connectionString = appOptions.DbConnectionString;
         
         // Database
-        // builder.Services.AddDbContext<MyDbContext>(options =>
-        // {
-        //     options.UseNpgsql(
-        //         builder.Configuration.GetConnectionString("DefaultConnection"));
-        // });
         builder.Services.AddDbContext<MyDbContext>((sp, options) =>
         {
             options.AddEfRealtimeInterceptor(sp);
@@ -37,18 +26,10 @@ public class Program
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
 
-        // Repositories
-        //builder.Services.AddScoped<IRepository<Login>, LoginRepository>();
-        //builder.Services.AddScoped<IRepository<User>, UserRepository>();
-
         // Services
-        //builder.Services.AddScoped<IPasswordHasher<Login>, NSecArgon2IdPasswordHasher>();
         builder.Services.AddScoped<ICommandService, CommandService>();
-        //builder.Services.AddScoped<IAuthService, AuthService>();
-        //builder.Services.AddScoped<ITokenService, JwtService>();
         
         // MQTT service
-        // builder.Services.AddScoped<IMqttClientService, MqttClientService>();
         builder.Services.AddMqttControllers();
         
         // Authentication & Authorization
@@ -59,25 +40,6 @@ public class Program
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
         });
-        // .AddJwtBearer(options =>
-        // {
-        //     options.TokenValidationParameters = JwtService.ValidationParameters(builder.Configuration);
-        //
-        //     // Debug logging
-        //     options.Events = new JwtBearerEvents
-        //     {
-        //         OnAuthenticationFailed = context =>
-        //         {
-        //             Console.WriteLine($"Authentication failed: {context.Exception}");
-        //             return Task.CompletedTask;
-        //         },
-        //         OnTokenValidated = context =>
-        //         {
-        //             Console.WriteLine("Token Validated Successfully");
-        //             return Task.CompletedTask;
-        //         }
-        //     };
-    //});
 
         builder.Services.AddAuthorization();
 
@@ -97,7 +59,7 @@ public class Program
         
         // OpenAPI / Swagger
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddOpenApiDocument(); // no DefaultPropertyNameHandling needed
+        builder.Services.AddOpenApiDocument();
 
         builder.Services.AddProblemDetails();
         
@@ -116,7 +78,6 @@ public class Program
                     .AllowAnyMethod();
             });
         });
-
     }
 
     public static async Task Main(string[] args)

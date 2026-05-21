@@ -27,7 +27,6 @@
 
     color: orange;
 
-
     margin-top: 20px;
 
     font-size: clamp(28px, 5vw, 72px);
@@ -223,7 +222,6 @@
 ========================= */
 
 .menu-rules-box {
-
     color: orange;
 
     width: min(95vw, 1200px);
@@ -246,11 +244,9 @@
 }
 
 .rules-box h3 {
-
     margin-bottom: 10px;
 }
 .rules-box p {
-
     margin: 0 auto;
 
     max-width: 1400px;
@@ -366,10 +362,6 @@ img {
         width: 100%;
     }
 
-    /*.rules-content {*/
-    /*    font-size: 14px;*/
-    /*}*/
-
     :root {
         --center-image-size: 40vw;
         --side-image-size: 26vw;
@@ -427,12 +419,6 @@ img {
     .carousel-side img {
         width: clamp(90px, 16vw, 180px);
     }
-
-    /*.rules-content {*/
-    /*    font-size: 12px;*/
-
-    /*    line-height: 1.2;*/
-    /*}*/
 
     .bird {
         width: 50px;

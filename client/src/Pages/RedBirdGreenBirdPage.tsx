@@ -9,21 +9,14 @@ import bird4 from "../assets/bird4.png";
 
 import Bird from "../Components/Bird.tsx";
 
-//import { useEffect, useRef, useState } from "react";
 import {useLocation, useNavigate} from "react-router-dom";
+import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
+import {useCooldown} from "../Hooks/useCooldown.ts";
 
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
 import type { Redbirdgreenbirdscore } from "../generated-ts-client";
-
-//import { StateleSSEClient } from "statele-sse";
-import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
-import {useCooldown} from "../Hooks/useCooldown.ts";
-
-// const sse = new StateleSSEClient(
-//     "http://localhost:5000/api/WebApi/sse"
-// );
 
 export default function RedBirdGreenBirdPage() {
 
@@ -33,12 +26,6 @@ export default function RedBirdGreenBirdPage() {
     const name = location.state?.name || "Player";
 
     const { sendCommand } = useCommand();
-
-    // const [scores, setScores] =
-    //     useState<Redbirdgreenbirdscore[]>([]);
-    //
-    // const cleanupRef =
-    //     useRef<(() => void) | null>(null);
 
     const {
         cooldown,
@@ -75,41 +62,6 @@ export default function RedBirdGreenBirdPage() {
 
         startCooldown(30);
     };
-
-    // ---------------- REALTIME SSE ----------------
-
-    // useEffect(() => {
-    //
-    //     // cleanup previous listener
-    //     if (cleanupRef.current) {
-    //         cleanupRef.current();
-    //     }
-    //
-    //     const cleanup = sse.listen(
-    //
-    //         async (connectionId) => {
-    //
-    //             console.log("SSE connection ID:", connectionId);
-    //
-    //             const response =
-    //                 await webClient.getRedbirdScores(connectionId);
-    //
-    //             return response;
-    //         },
-    //
-    //         (data) => {
-    //
-    //             console.log("Realtime update:", data);
-    //
-    //             setScores(data);
-    //         }
-    //     );
-    //
-    //     cleanupRef.current = cleanup;
-    //
-    //     return () => cleanup?.();
-    //
-    // }, []);
 
     // ---------------- UI ----------------
 
@@ -154,23 +106,16 @@ export default function RedBirdGreenBirdPage() {
                         </thead>
 
                         <tbody>
-
-                        {scores.map((player) => (
-
-                            <tr key={player.id}>
-
-                                <td>{player.playerName}</td>
-
-                                <td>{player.score}</td>
-
-                            </tr>
-
-                        ))}
-
+                            {scores.map((player) => (
+    
+                                <tr key={player.id}>
+                                    <td>{player.playerName}</td>
+    
+                                    <td>{player.score}</td>
+                                </tr>
+                            ))}
                         </tbody>
-
                     </table>
-
                 </div>
 
                 {/* BUTTON */}
@@ -204,7 +149,6 @@ export default function RedBirdGreenBirdPage() {
                 </div>
 
             </div>
-
         </div>
     );
 }

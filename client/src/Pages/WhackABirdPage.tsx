@@ -7,20 +7,14 @@ import bird4 from "../assets/bird4.png";
 import Bird from "../Components/Bird.tsx";
 import WhackABirdRules from "../Components/Rules/WhackABirdRules.tsx";
 
-//import {useEffect, useRef, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
+import {useCooldown} from "../Hooks/useCooldown.ts";
 import { useCommand } from "../Hooks/useCommands.ts";
 import { webClient } from "../api-clients.ts";
 
 import type { Whackabirdscore } from "../generated-ts-client";
-//import {StateleSSEClient} from "statele-sse";
-import {useRealtimeScores} from "../Hooks/useRealtimeScores.ts";
-import {useCooldown} from "../Hooks/useCooldown.ts";
-
-// const sse = new StateleSSEClient(
-//     "http://localhost:5000/api/WebApi/sse"
-// );
 
 export default function WackAMolePage() {
 
@@ -29,9 +23,6 @@ export default function WackAMolePage() {
     const name = location.state?.name || "Player";
 
     const { sendCommand } = useCommand();
-    // const [scores, setScores] = useState<Whackabirdscore[]>([]);
-    //
-    // const cleanupRef = useRef<(() => void) | null>(null);
 
     const {
         cooldown,
@@ -66,40 +57,6 @@ export default function WackAMolePage() {
 
         startCooldown(30);
     };
-
-    // ---------------- REALTIME SSE ----------------
-
-    // useEffect(() => {
-    //
-    //     if (cleanupRef.current) {
-    //         cleanupRef.current();
-    //     }
-    //
-    //     const cleanup = sse.listen(
-    //
-    //         async (connectionId) => {
-    //
-    //             console.log("SSE connection ID:", connectionId);
-    //
-    //             const response =
-    //                 await webClient.getWhackabirdScores(connectionId);
-    //
-    //             return response;
-    //         },
-    //
-    //         (data) => {
-    //
-    //             console.log("Realtime update:", data);
-    //
-    //             setScores(data);
-    //         }
-    //     );
-    //
-    //     cleanupRef.current = cleanup;
-    //
-    //     return () => cleanup?.();
-    //
-    // }, []);
 
     // ---------------- UI ----------------
 
@@ -144,23 +101,16 @@ export default function WackAMolePage() {
                         </thead>
 
                         <tbody>
-
-                        {scores.map((player) => (
-
-                            <tr key={player.id}>
-
-                                <td>{player.playerName}</td>
-
-                                <td>{player.score}</td>
-
-                            </tr>
-
-                        ))}
-
+                            {scores.map((player) => (
+    
+                                <tr key={player.id}>
+                                    <td>{player.playerName}</td>
+    
+                                    <td>{player.score}</td>
+                                </tr>
+                            ))}
                         </tbody>
-
                     </table>
-
                 </div>
 
                 {/* BUTTON */}
@@ -194,7 +144,6 @@ export default function WackAMolePage() {
                 </div>
 
             </div>
-
         </div>
     );
 }

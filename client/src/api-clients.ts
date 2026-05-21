@@ -4,7 +4,6 @@ import {
 } from "./generated-ts-client.ts";
 import {finalBaseUrl} from "./BaseUrl.ts";
 
-
 export const customFetch = async (
     url: RequestInfo,
     init?: RequestInit

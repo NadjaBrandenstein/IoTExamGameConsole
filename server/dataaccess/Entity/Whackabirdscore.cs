@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace dataaccess.Entity;
+﻿namespace dataaccess.Entity;
 
 public partial class Whackabirdscore
 {

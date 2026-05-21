@@ -11,13 +11,6 @@ public class CommandService (
 {
     public async Task SendCommandAsync(string deviceId, GameCommandDto command)
     {
-        // // Check if device exists
-        // var exists = await ctx.Turbineregistries
-        //     .AnyAsync(t => t.TurbineId == deviceId);
-        //
-        // if (!exists)
-        //     throw new Exception("Device not found");
-
         // Validate input
         ValidateCommand(command);
 

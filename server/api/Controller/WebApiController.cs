@@ -1,10 +1,8 @@
 using dataaccess.Entity;
 using dataaccess.MyDbContext;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StateleSSE.AspNetCore;
 using StateleSSE.AspNetCore.EfRealtime;
-using StateleSSE.AspNetCore.GroupRealtime;
 
 namespace api.Controller;
 
@@ -15,7 +13,6 @@ public class WebApiController(
     IRealtimeManager realtimeManager,
     MyDbContext ctx) : RealtimeControllerBase(backplane)
 {
-
     [HttpGet("whackabird")]
     public async Task<RealtimeListenResponse<List<Whackabirdscore>>> GetWhackabirdScores([FromQuery] string connectionId)
     {
@@ -40,7 +37,6 @@ public class WebApiController(
 
         return new RealtimeListenResponse<List<Whackabirdscore>>(group, initial);
     }
-
     
     [HttpGet("redbirdgreenbird")]
     public async Task<RealtimeListenResponse<List<Redbirdgreenbirdscore>>> GetRedbirdScores([FromQuery] string connectionId)
@@ -66,7 +62,6 @@ public class WebApiController(
 
         return new RealtimeListenResponse<List<Redbirdgreenbirdscore>>(group, initial);
     }
-
     
     [HttpGet("birdiesays")]
     public async Task<RealtimeListenResponse<List<Birdiesaysscore>>> GetBirdieSaysScores([FromQuery] string connectionId)

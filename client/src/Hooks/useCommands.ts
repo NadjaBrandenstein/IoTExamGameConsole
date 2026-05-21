@@ -13,10 +13,6 @@ export const useCommand = () => {
             setLoading(true);
             setError(null);
 
-            // const response = await commandClient.sendCommand(deviceId,command);
-            //
-            // return response;
-
             return await commandClient.sendCommand(deviceId, command);
 
         } catch (err) {

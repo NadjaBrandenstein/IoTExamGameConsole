@@ -1,4 +1,3 @@
-using api.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controller;

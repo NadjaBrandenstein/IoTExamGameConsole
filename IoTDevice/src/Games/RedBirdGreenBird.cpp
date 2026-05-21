@@ -28,7 +28,6 @@ constexpr uint32_t RED_MAX_MS   = 3500;
 enum class State : uint8_t {
     TITLE,
     WAITING,
-    //COUNTDOWN,
     GREEN_LIGHT,
     RED_LIGHT,
     CAUGHT,
@@ -195,7 +194,6 @@ void redGreenInit()
     lcd.init();
     lcd.backlight();
 
-    //randomSeed(analogRead(34));
     randomSeed(analogRead(0));
 
     showTitle();
@@ -223,25 +221,8 @@ void redGreenUpdate()
     
     // Switch back to input to read button
     pinMode(PIN_BUTTON, INPUT_PULLUP);
-    
-    /* if (buttonJustPressed()) {
-        gState = State::COUNTDOWN;
-    } */
-    break;
 
-    /* case State::COUNTDOWN:
-        ledsOff();
-        for (int i = 3; i >= 1; i--) {
-            showCountdown(i);
-            delay(900);
-        }
-        gGameStart     = millis();
-        gPhaseStart    = millis();
-        gPhaseDuration = random(GREEN_MIN_MS, GREEN_MAX_MS);
-        showGreenLight();
-        ledsOn();   // GREEN phase starts → LEDs on
-        gState = State::GREEN_LIGHT;
-        break; */
+    break;
 
     case State::GREEN_LIGHT:
         if (buttonJustPressed()) {

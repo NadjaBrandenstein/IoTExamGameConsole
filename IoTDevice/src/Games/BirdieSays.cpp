@@ -36,7 +36,6 @@ void drawLCD(const char* line1, const char* line2){
 }
 
 void updateLCD(int timeLeft){
-
   char l1[16];
   char l2[16];
 
@@ -47,7 +46,6 @@ void updateLCD(int timeLeft){
 }
 
 void gameOverScreen(){
-
   char l1[16];
   char l2[16];
 
@@ -60,7 +58,6 @@ void gameOverScreen(){
 // ---------------- GAME CONTROL ----------------
 
 void birdieStartGame() {
-
     score = 0;
     seqLen = 2;
 
@@ -76,7 +73,6 @@ void birdieStartGame() {
 // ---------------- LED ----------------
 
 void showLED(int pin){
-
   pinMode(pin, OUTPUT);
 
   digitalWrite(pin, HIGH);
@@ -91,7 +87,6 @@ void showLED(int pin){
 // ---------------- SEQUENCE ----------------
 
 void showSequence(){
-
   Serial.println("\n--- SHOW SEQUENCE ---");
 
   drawLCD("WATCH!", "Memorize");
@@ -119,7 +114,6 @@ void showSequence(){
 // ---------------- PLAYER ----------------
 
 bool playerTurn(){
-
   Serial.println("--- PLAYER TURN ---");
 
   for(int i = 0; i < seqLen; i++){
@@ -167,7 +161,6 @@ bool playerTurn(){
 
     if(!correct) return false;
   }
-
   return true;
 }
 

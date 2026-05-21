@@ -95,9 +95,7 @@ export default function MenuPage() {
                     <button className="menu-arrow" onClick={next}>❯</button>
 
                 </div>
-
-
-
+                
             </div>
             {/* RULES */}
             <div className="menu-rules-box">
